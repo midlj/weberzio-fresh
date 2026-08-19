@@ -1,26 +1,25 @@
-import Frame from "@/components/layout/Frame";
-import Header from "@/components/landing/Header";
 import Hero from "@/components/landing/Hero";
+import Stats from "@/components/landing/Stats";
 import Adventure from "@/components/landing/Adventure";
+import Services from "@/components/landing/Services";
 import ChangingDev from "@/components/landing/ChangingDev";
+import Work from "@/components/landing/Work";
+import Testimonials from "@/components/landing/Testimonials";
+import Faq from "@/components/landing/Faq";
 import CTA from "@/components/landing/CTA";
-import Footer from "@/components/landing/Footer";
-import CookieBanner from "@/components/landing/CookieBanner";
 
 export default function Home() {
   return (
-    <Frame>
-      <div id="top" className="relative">
-        <Header />
-        <main>
-          <Hero />
-          <Adventure />
-          <ChangingDev />
-          <CTA />
-        </main>
-        <Footer />
-      </div>
-      <CookieBanner />
-    </Frame>
+    <>
+      <Hero />
+      <Stats />
+      <Adventure />
+      <Services />
+      <ChangingDev />
+      <Work />
+      <Testimonials />
+      <Faq />
+      <CTA />
+    </>
   );
 }

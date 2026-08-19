@@ -1,25 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 
+import { contact } from "@/data/site";
+
 const menuLinks = [
-  "Services",
-  "Products",
-  "Portfolio",
-  "Partner",
-  "Blog",
-  "Careers",
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Terms", href: "/terms" },
 ];
 
 const socialLinks = [
-  "Instagram",
-  "Email",
-  "LinkedIn",
-  "WhatsApp",
-  "Facebook",
-  "Behance",
-  "Dribbble",
+  { label: "Email", href: contact.emailHref },
+  { label: "WhatsApp", href: contact.whatsapp },
+  { label: "Phone", href: contact.phoneHref },
 ];
 
 /** Up-right arrow that trails every menu label. */
@@ -51,6 +50,10 @@ export default function OverlayMenu({ open, onClose }) {
     const context = gsap.context(() => {
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+      // Match the element's initial CSS (invisible + opacity-0) so GSAP and
+      // the stylesheet agree before the first play().
+      gsap.set(root.current, { autoAlpha: 0 });
+
       const tl = gsap.timeline({
         paused: true,
         defaults: { ease: "power3.out" },
@@ -63,17 +66,34 @@ export default function OverlayMenu({ open, onClose }) {
           { opacity: 1, y: 0 }
         );
       } else {
+        /*
+         * fromTo, not from: a paused `.from()` applies its start values at
+         * build time via immediateRender, and once this timeline has been
+         * reversed those targets can stay latched at opacity 0 even after a
+         * later play(). Declaring both endpoints removes that ambiguity.
+         */
         tl.set(root.current, { autoAlpha: 1 })
-          .from(panel.current, { yPercent: -3, opacity: 0, duration: 0.45 })
-          .from("[data-menu-close]", { opacity: 0, duration: 0.3 }, 0.15)
-          .from(
+          .fromTo(
+            panel.current,
+            { yPercent: -3, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 0.45 }
+          )
+          .fromTo(
+            "[data-menu-close]",
+            { opacity: 0 },
+            { opacity: 1, duration: 0.3 },
+            0.15
+          )
+          .fromTo(
             "[data-menu-link]",
-            { yPercent: 110, opacity: 0, duration: 0.65, stagger: 0.06 },
+            { yPercent: 110, opacity: 0 },
+            { yPercent: 0, opacity: 1, duration: 0.65, stagger: 0.06 },
             0.1
           )
-          .from(
+          .fromTo(
             "[data-menu-social]",
-            { y: 14, opacity: 0, duration: 0.4, stagger: 0.035 },
+            { y: 14, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.4, stagger: 0.035 },
             0.4
           );
       }
@@ -84,11 +104,27 @@ export default function OverlayMenu({ open, onClose }) {
     return () => context.revert();
   }, []);
 
+  /*
+   * Drive the timeline on toggle.
+   *
+   * The first run happens on mount with `open` still false. Reversing a
+   * timeline that is already at time 0 completes instantly, which fires
+   * onReverseComplete and leaves every `.from()` target parked at its start
+   * value (opacity: 0) — so a later play() would find the timeline already
+   * finished and reveal an empty panel. Skip that first reverse.
+   */
+  const hasOpened = useRef(false);
+
   useEffect(() => {
     const tl = timeline.current;
     if (!tl) return;
-    if (open) tl.play();
-    else tl.reverse();
+
+    if (open) {
+      hasOpened.current = true;
+      tl.play();
+    } else if (hasOpened.current) {
+      tl.reverse();
+    }
   }, [open]);
 
   // Escape closes, and the page behind stops scrolling while the menu is up.
@@ -112,12 +148,12 @@ export default function OverlayMenu({ open, onClose }) {
   return (
     <div
       ref={root}
-      className="invisible fixed inset-x-[var(--frame-gap)] bottom-[var(--frame-gap)] top-[var(--frame-top)] z-[60] font-display opacity-0"
+      className="invisible fixed inset-[var(--frame-gap)] z-[60] font-display opacity-0"
       aria-hidden={!open}
     >
       <div
         ref={panel}
-        className="relative flex h-full flex-col overflow-y-auto rounded-[var(--frame-radius)] rounded-tl-none bg-[#f4f4f2] px-6 py-8 text-black sm:px-12 sm:py-10"
+        className="relative flex h-full flex-col overflow-y-auto rounded-[var(--frame-radius)] bg-[#f4f4f2] px-6 py-8 text-black sm:px-12 sm:py-10"
       >
         <button
           data-menu-close
@@ -139,31 +175,38 @@ export default function OverlayMenu({ open, onClose }) {
         </button>
 
         <nav className="mt-10 flex-1 sm:mt-14">
-          {menuLinks.map((label) => (
+          {menuLinks.map((link) => (
             // Each label clips its own reveal so the stagger reads as a wipe.
-            <span key={label} className="block overflow-hidden">
-              <a
+            <span key={link.label} className="block overflow-hidden">
+              <Link
                 data-menu-link
-                href="#"
+                href={link.href}
+                onClick={onClose}
                 className="group inline-flex items-start text-[44px] font-light uppercase leading-[1.12] tracking-tight transition-opacity hover:opacity-55 sm:text-[64px] lg:text-[76px]"
               >
-                {label}
+                {link.label}
                 <Arrow className="mt-[0.35em] h-[0.3em] w-[0.3em] shrink-0 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </a>
+              </Link>
             </span>
           ))}
         </nav>
 
         <div className="mt-10 border-t border-black/15 pt-5">
           <ul className="flex flex-wrap gap-x-7 gap-y-3">
-            {socialLinks.map((label) => (
-              <li key={label}>
+            {socialLinks.map((link) => (
+              <li key={link.label}>
                 <a
                   data-menu-social
-                  href="#"
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    link.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className="group inline-flex items-start text-[13.5px] font-semibold uppercase tracking-[0.06em] transition-opacity hover:opacity-55"
                 >
-                  {label}
+                  {link.label}
                   <Arrow className="mt-[1px] h-[9px] w-[9px] shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </a>
               </li>

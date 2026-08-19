@@ -1,19 +1,32 @@
 import Link from "next/link";
 
+export const metadata = { title: "Page not found" };
+
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-5 text-center">
-      <p className="text-[34px] font-extrabold tracking-tight">404</p>
-      <h1 className="mt-1 text-[16px] font-bold">Page not found</h1>
-      <p className="mt-1.5 text-[13px] text-gray-500">
-        That page doesn&apos;t exist, or it moved somewhere else.
-      </p>
-      <Link
-        href="/"
-        className="mt-6 rounded-lg bg-gray-900 px-5 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-gray-800"
-      >
-        Back home
-      </Link>
-    </main>
+    <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-black px-5 py-24 text-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[700px] max-w-[110vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hr-green/12 blur-[140px]"
+      />
+
+      <div className="relative">
+        <p className="font-body text-[13px] uppercase tracking-[0.18em] text-hr-green">
+          404
+        </p>
+        <h1 className="mt-4 text-[32px] font-semibold tracking-tight sm:text-[46px]">
+          This page doesn&rsquo;t exist
+        </h1>
+        <p className="mx-auto mt-4 max-w-md font-body text-[15px] leading-relaxed text-white/55">
+          The page you were looking for may have moved, or never existed.
+        </p>
+        <Link
+          href="/"
+          className="mt-8 inline-block rounded-md bg-hr-green px-7 py-3.5 text-[14.5px] font-semibold text-black transition-colors hover:bg-hr-green-bright"
+        >
+          Back to home
+        </Link>
+      </div>
+    </section>
   );
 }

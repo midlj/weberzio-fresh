@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -32,8 +33,8 @@ function Bullets({ items }) {
   );
 }
 
-/** Mock assessment window peeking in from the right of the developer card. */
-function AssessmentMock() {
+/** Mock editor window peeking in from the right of the startup card. */
+function EditorMock() {
   return (
     <div
       data-art
@@ -46,15 +47,15 @@ function AssessmentMock() {
       </div>
 
       <div className="p-4">
-        <p className="text-[10px] text-white/35">Assessment / Python</p>
-        <p className="mt-1.5 text-[19px] font-semibold text-white">Python De…</p>
+        <p className="text-[10px] text-white/35">app / dashboard</p>
+        <p className="mt-1.5 text-[19px] font-semibold text-white">page.tsx</p>
 
         <p className="mt-3 inline-flex items-center gap-1.5 rounded bg-hr-green/15 px-2 py-1 text-[10px] font-medium text-hr-green">
           <span className="h-2 w-2 rounded-[2px] bg-hr-green" />
-          HackerRank AI Enab…
+          Deployed to staging
         </p>
 
-        <p className="mt-4 text-[11px] text-white/55">Q2. Explain how yo…</p>
+        <p className="mt-4 text-[11px] text-white/55">Build passed in 42s</p>
 
         {/* Suggestive code block — colored bars stand in for syntax. */}
         <div className="mt-3 space-y-1.5 rounded-md bg-black/60 p-3">
@@ -73,12 +74,12 @@ function AssessmentMock() {
   );
 }
 
-/** Faceted GenAI prism anchored to the business card. */
-function GenAiMock() {
+/** Faceted cloud prism anchored to the enterprise card. */
+function CloudMock() {
   return (
     <div data-art className="pointer-events-none absolute bottom-0 right-0 hidden h-full w-[46%] sm:block">
       <div className="absolute right-6 top-12 flex h-[86px] w-[86px] items-center justify-center rounded-2xl bg-gradient-to-br from-[#6ff3b8] to-[#0f9e77] text-[17px] font-bold text-black shadow-[0_0_50px_-8px_rgba(57,224,138,0.7)]">
-          GenAI
+          Cloud
       </div>
 
       <svg
@@ -203,76 +204,80 @@ export default function Adventure() {
           data-heading
           className="text-center text-[34px] font-semibold leading-tight tracking-tight text-neutral-700 sm:text-[46px]"
         >
-          Choose Your <span className="text-[#22c55e]">Adventure</span>
+          Choose Your <span className="text-[#22c55e]">Path</span>
         </h2>
         <p
           data-lead
           className="mx-auto mt-4 max-w-lg text-center font-body text-[15px] leading-relaxed text-neutral-500"
         >
-          We build elite tech teams for companies and enhance candidates&rsquo;
-          tech skills and job prospects
+          We partner with founders, product teams, and enterprises to design and
+          build software that solves real problems
         </p>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
-          {/* Developer card */}
+          {/* Startup card */}
           <article
             data-card
             className="relative min-h-[330px] overflow-hidden rounded-2xl bg-[#0b0d0f] p-8"
           >
             <div className="relative z-10 max-w-[54%] sm:max-w-[52%]">
-              <h3 className="text-[26px] font-semibold text-white">For developers</h3>
+              <h3 className="text-[26px] font-semibold text-white">
+                For startups
+              </h3>
               <p className="mt-2.5 font-body text-[14px] leading-relaxed text-white/60">
-                HackerRank helps you hone your developer skills and become
-                GenAI-ready.
+                Weberzio takes your concept from discovery to a launched
+                product.
               </p>
 
               <Bullets
                 items={[
-                  "Track your skill proficiency",
-                  "Prepare for technical interviews",
-                  "Learn the latest GenAI skills",
+                  "Ship an MVP in weeks, not months",
+                  "SaaS platforms and Flutter mobile apps",
+                  "Fractional CTO advisory as you scale",
                 ]}
               />
 
-              <a
-                href="#cta"
+              <Link
+                href="/services/saas-product-engineering"
                 className="mt-8 inline-block w-full rounded-md bg-hr-green px-6 py-3 text-center text-[14px] font-semibold text-black transition-colors hover:bg-hr-green-bright"
               >
-                Explore HackerRank Community
-              </a>
+                Explore product engineering
+              </Link>
             </div>
 
-            <AssessmentMock />
+            <EditorMock />
           </article>
 
-          {/* Business card */}
+          {/* Enterprise card */}
           <article
             data-card
             className="relative min-h-[330px] overflow-hidden rounded-2xl bg-[#0b0d0f] p-8"
           >
             <div className="relative z-10 max-w-[58%] sm:max-w-[56%]">
-              <h3 className="text-[26px] font-semibold text-white">For business</h3>
+              <h3 className="text-[26px] font-semibold text-white">
+                For enterprises
+              </h3>
               <p className="mt-2.5 font-body text-[14px] leading-relaxed text-white/60">
-                Get your company GenAI ready
+                Production-grade platforms that stay available as you grow
               </p>
 
               <Bullets
                 items={[
-                  "Attract and hire the right developers",
-                  "Upskill your team with the latest GenAI skills",
-                  "Build out your AI platform team",
+                  "Secure REST and GraphQL API architectures",
+                  "Cloud infrastructure and DevOps on AWS",
+                  "Architecture audits and legacy migrations",
                 ]}
               />
 
-              <a
-                href="#cta"
+              <Link
+                href="/services"
                 className="mt-8 inline-block w-full rounded-md bg-white/10 px-6 py-3 text-center text-[14px] font-medium text-white transition-colors hover:bg-white/20"
               >
-                Explore HackerRank Community
-              </a>
+                Explore all services
+              </Link>
             </div>
 
-            <GenAiMock />
+            <CloudMock />
           </article>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 
 /** Concentric fingerprint mark that sits inline before the word "human". */
@@ -115,7 +116,13 @@ export default function Hero() {
   return (
     <section
       ref={root}
-      className="relative overflow-hidden bg-black px-5 pb-28 pt-16 sm:px-8 sm:pb-36 sm:pt-24"
+      /*
+       * Fills the viewport, less the frame's chrome: the shell already pads
+       * the top by --frame-top (the logo tab) and the bottom by --frame-gap,
+       * so a plain 100vh would overflow by exactly that much. dvh keeps the
+       * bottom edge welded to the viewport as mobile browser bars hide.
+       */
+      className="relative flex min-h-[calc(100dvh-var(--frame-top)-var(--frame-gap))] flex-col justify-center overflow-hidden bg-black px-5 py-20 sm:px-8"
     >
       {/* Ambient green bloom behind the headline. */}
       <div
@@ -129,12 +136,12 @@ export default function Hero() {
           {/* Each line clips its own reveal, so the stagger reads as a wipe. */}
           <span className="block overflow-hidden pb-[0.06em]">
             <span data-hero-line className="block">
-              The future
+              Web &amp; Mobile Apps
             </span>
           </span>
           <span className="block overflow-hidden pb-[0.06em]">
             <span data-hero-line className="block">
-              of development
+              that scale with
             </span>
           </span>
           <span className="block overflow-hidden pb-[0.06em]">
@@ -142,15 +149,13 @@ export default function Hero() {
               data-hero-line
               className="inline-flex flex-wrap items-center justify-center gap-x-[0.22em]"
             >
-              is
+              your
               <span className="inline-flex items-center gap-[0.16em] text-white/90">
                 <Fingerprint />
-                human
+                business
               </span>
-              <span className="text-white/45">+</span>
-              <span className="inline-flex items-center gap-[0.16em] text-white/90">
+              <span className="inline-flex items-center gap-[0.16em]">
                 <Spark />
-                AI
               </span>
             </span>
           </span>
@@ -160,17 +165,24 @@ export default function Hero() {
           data-hero-copy
           className="mx-auto mt-8 max-w-xl font-body text-[15px] leading-relaxed text-white/55 sm:text-[17px]"
         >
-          We help you map the skills you need, track the skills you have, and
-          close your gaps to thrive in a GenAI world.
+          Premium web and mobile app development team and best website
+          development company in Kerala, helping startups and enterprises ship
+          reliable products.
         </p>
 
-        <div data-hero-cta className="mt-10">
-          <a
-            href="#adventure"
+        <div data-hero-cta className="mt-10 flex flex-wrap justify-center gap-3">
+          <Link
+            href="/contact"
             className="inline-block rounded-lg border border-white/15 bg-white/5 px-8 py-4 font-display text-[15px] font-medium text-white shadow-[0_0_60px_-12px_rgba(57,224,138,0.5)] transition-colors hover:bg-white/10"
           >
-            Join The Community
-          </a>
+            Start a project
+          </Link>
+          <Link
+            href="/work"
+            className="inline-block rounded-lg border border-white/15 px-8 py-4 font-display text-[15px] font-medium text-white/85 transition-colors hover:bg-white/5"
+          >
+            View our work
+          </Link>
         </div>
       </div>
     </section>

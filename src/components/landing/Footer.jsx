@@ -1,29 +1,78 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import { contact, site } from "@/data/site";
+import { services } from "@/data/services";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const columns = [
   {
-    title: "Products",
-    links: ["Screen", "Interview", "SkillUp", "Certifications", "Pricing"],
+    title: "Services",
+    links: services.slice(0, 4).map((service) => ({
+      label: service.title,
+      href: `/services/${service.slug}`,
+    })),
   },
   {
-    title: "Solutions",
-    links: ["Hire developers", "Upskill teams", "AI platform teams", "Universities"],
-  },
-  {
-    title: "Resources",
-    links: ["Blog", "Customer stories", "Developer skills report", "Help center"],
+    title: "More services",
+    links: services.slice(4).map((service) => ({
+      label: service.title,
+      href: `/services/${service.slug}`,
+    })),
   },
   {
     title: "Company",
-    links: ["About", "Careers", "Newsroom", "Contact"],
+    links: [
+      { label: "Our work", href: "/work" },
+      { label: "About", href: "/#about" },
+      { label: "Contact", href: "/contact" },
+      { label: "Terms & Conditions", href: "/terms" },
+    ],
+  },
+  {
+    title: "Get in touch",
+    links: [
+      { label: contact.email, href: contact.emailHref },
+      { label: contact.phone, href: contact.phoneHref },
+      { label: "WhatsApp", href: contact.whatsapp },
+    ],
   },
 ];
+
+/**
+ * Internal routes go through next/link; mail, tel and external URLs stay as
+ * plain anchors so the browser hands them to the right handler.
+ */
+function FooterLink({ href, children }) {
+  const className =
+    "font-body text-[13.5px] text-white/50 transition-colors hover:text-white";
+
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    );
+  }
+
+  const external = href.startsWith("http");
+
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={className}
+    >
+      {children}
+    </a>
+  );
+}
 
 export default function Footer() {
   const root = useRef(null);
@@ -54,9 +103,13 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div data-footer-col>
-            <p className="text-[19px] font-extrabold tracking-tight">HackerRank</p>
+            <p className="text-[19px] tracking-tight">
+              <span className="font-bold">weber</span>
+              <span className="font-light">zio</span>
+            </p>
             <p className="mt-3 max-w-xs font-body text-[13.5px] leading-relaxed text-white/50">
-              The developer skills platform for a GenAI world.
+              {site.tagline}. A remote engineering studio building web and
+              mobile products for founders and enterprises.
             </p>
           </div>
 
@@ -65,13 +118,8 @@ export default function Footer() {
               <p className="text-[13px] font-semibold text-white">{column.title}</p>
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="font-body text-[13.5px] text-white/50 transition-colors hover:text-white"
-                    >
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    <FooterLink href={link.href}>{link.label}</FooterLink>
                   </li>
                 ))}
               </ul>
@@ -81,18 +129,18 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[12.5px] text-white/40">
-            © {new Date().getFullYear()} HackerRank. All rights reserved.
+            © {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <div className="flex gap-6">
-            {["Privacy", "Terms", "Cookie Policy"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="text-[12.5px] text-white/40 transition-colors hover:text-white"
-              >
-                {item}
-              </a>
-            ))}
+            <span className="text-[12.5px] text-white/40">
+              {contact.address}
+            </span>
+            <Link
+              href="/terms"
+              className="text-[12.5px] text-white/40 transition-colors hover:text-white"
+            >
+              Terms
+            </Link>
           </div>
         </div>
       </div>

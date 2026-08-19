@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import { contact } from "@/data/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,33 +55,35 @@ export default function CTA() {
           data-cta-title
           className="text-[32px] font-semibold leading-tight tracking-tight sm:text-[48px]"
         >
-          Close your skill gaps
+          Ready to build your
           <br />
-          <span className="text-hr-green">before they close on you</span>
+          <span className="text-hr-green">next project?</span>
         </h2>
 
         <p
           data-cta-copy
           className="mx-auto mt-5 max-w-lg font-body text-[15px] leading-relaxed text-white/55 sm:text-[16px]"
         >
-          Map the skills your team needs, see where you stand today, and start
-          closing the distance.
+          Tell us what you&rsquo;re building and we&rsquo;ll get back to you
+          within one business day with next steps.
         </p>
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
+          <Link
             data-cta-button
-            href="#"
+            href="/contact"
             className="w-full rounded-md bg-hr-green px-7 py-3.5 text-[14.5px] font-semibold text-black transition-colors hover:bg-hr-green-bright sm:w-auto"
           >
-            Sign Up
-          </a>
+            Let&rsquo;s talk
+          </Link>
           <a
             data-cta-button
-            href="#"
+            href={contact.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full rounded-md border border-white/15 bg-white/5 px-7 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-white/10 sm:w-auto"
           >
-            Request Demo
+            WhatsApp us
           </a>
         </div>
       </div>

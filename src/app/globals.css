@@ -45,38 +45,29 @@
   --font-light: "NexaLight", "NexaRegular", var(--font-manrope), "Manrope Fallback", system-ui, sans-serif;
   --font-body: var(--font-manrope), "Manrope Fallback", system-ui, sans-serif;
 
-  /* Frame shell: side/bottom gutter, and the taller top band the header
-     sits inside. The logo tab and nav pill ride on that band. */
-  --frame-gap: 14px;
-  --frame-radius: 26px;
-  --frame-top: 72px;
+  /* Frame shell, measured off the reference at a 1920px viewport.
+     --frame-gap   gutter on the sides/bottom and above the panel
+     --frame-top   depth of the black tab that holds the logo
+     --logo-tab-w  where that tab's convex bulge finishes
+     --nav-notch-w black notch the nav pill sits in, at the right */
+  --frame-gap: 18px;
+  --frame-radius: 22px;
+  --frame-top: 78px;
+  --logo-tab-w: 210px;
+  --nav-notch-w: 628px;
+  --nav-notch-h: 78px;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 1023px) {
   :root {
-    --frame-gap: 18px;
-    --frame-top: 76px;
+    --frame-gap: 12px;
+    --frame-radius: 18px;
+    --frame-top: 62px;
+    --logo-tab-w: 178px;
+    /* Nav pill is hidden below lg, so the notch collapses to the grid button. */
+    --nav-notch-w: 74px;
+    --nav-notch-h: 62px;
   }
-}
-
-html {
-  scroll-behavior: smooth;
-  background: #000;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Headings and interface labels default to the display face. */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.font-display {
-  font-family: var(--font-display);
 }
 
 /*
@@ -89,11 +80,33 @@ h6,
   opacity: 0;
 }
 
+/* Continuous horizontal scroll for the testimonial rail. */
+@keyframes hr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hr-marquee {
+  animation: hr-marquee 46s linear infinite;
+}
+
+.hr-marquee:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-hero-line],
   [data-hero-copy],
   [data-hero-cta] {
     opacity: 1;
+  }
+
+  .hr-marquee {
+    animation: none;
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 /** Consent strip pinned to the bottom of the hero until the visitor answers. */
 export default function CookieBanner() {
@@ -16,9 +17,12 @@ export default function CookieBanner() {
           clicking Accept, you consent to the use of additional cookies for
           analytics and marketing. Feel free to update your settings at any
           time. Read more in our{" "}
-          <a href="#" className="text-hr-green underline-offset-2 hover:underline">
-            Cookie Policy
-          </a>
+          <Link
+            href="/terms"
+            className="text-hr-green underline-offset-2 hover:underline"
+          >
+            Terms &amp; Conditions
+          </Link>
           .
         </p>
 
