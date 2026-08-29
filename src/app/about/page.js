@@ -14,7 +14,7 @@ import {
 import { services } from "@/data/services";
 
 export const metadata = {
-  title: "About Weberzio | Web & Mobile App Development Agency Kerala",
+  title: "About Us — Web & Mobile App Development Agency in Kerala",
   description: aboutIntro.intro,
   alternates: { canonical: "/about" },
 };

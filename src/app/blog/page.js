@@ -5,7 +5,7 @@ import CTA from "@/components/landing/CTA";
 import { posts } from "@/data/posts";
 
 export const metadata = {
-  title: "Web Development Blog & Engineering Insights | Weberzio",
+  title: "Web Development Blog & Engineering Insights",
   description:
     "Writing on how we build, design, and ship software at Weberzio.",
   alternates: { canonical: "/blog" },
@@ -36,7 +36,7 @@ export default function BlogPage() {
     <>
       <PageHeader
         eyebrow="Journal"
-        title="Notes from the workshop."
+        title="Web development notes from the workshop."
         intro="Writing on how we build, design, and ship software at Weberzio."
       >
         <p

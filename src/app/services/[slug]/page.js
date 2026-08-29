@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import PageHeader from "@/components/landing/PageHeader";
 import Process from "@/components/landing/Process";
 import CTA from "@/components/landing/CTA";
+import JsonLd, { ORG_ID, breadcrumbs } from "@/components/seo/JsonLd";
 import { services, getService } from "@/data/services";
+import { site } from "@/data/site";
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -17,10 +19,13 @@ export async function generateMetadata({ params }) {
   if (!service) return {};
 
   return {
-    title: `${service.title} Services`,
+    title: `${service.title} in Kerala`,
     description: service.tagline,
     alternates: { canonical: `/services/${service.slug}` },
-    openGraph: { title: service.title, description: service.tagline },
+    openGraph: {
+      title: `${service.title} in Kerala`,
+      description: service.tagline,
+    },
   };
 }
 
@@ -32,8 +37,27 @@ export default async function ServicePage({ params }) {
 
   const related = services.filter((item) => item.slug !== service.slug);
 
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.title,
+    description: service.body,
+    serviceType: service.title,
+    url: `${site.url}/services/${service.slug}`,
+    provider: { "@id": ORG_ID },
+    areaServed: ["Kerala", "India", "Worldwide"],
+  };
+
   return (
     <>
+      <JsonLd data={serviceSchema} />
+      <JsonLd
+        data={breadcrumbs(site.url, [
+          ["Home", "/"],
+          ["Services", "/services"],
+          [service.title, null],
+        ])}
+      />
       <PageHeader
         eyebrow={`Service ${service.number}`}
         title={service.title}

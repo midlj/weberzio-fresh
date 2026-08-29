@@ -3,7 +3,9 @@ import { notFound } from "next/navigation";
 
 import PageHeader from "@/components/landing/PageHeader";
 import CTA from "@/components/landing/CTA";
+import JsonLd, { ORG_ID, breadcrumbs } from "@/components/seo/JsonLd";
 import { caseStudies, getCaseStudy } from "@/data/casestudies";
+import { site } from "@/data/site";
 
 export function generateStaticParams() {
   return caseStudies.map((study) => ({ slug: study.slug }));
@@ -38,8 +40,27 @@ export default async function CaseStudyPage({ params }) {
     ["Year", study.year],
   ];
 
+  const caseStudySchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: study.name,
+    description: study.description[0],
+    url: `${site.url}/work/${study.slug}`,
+    creator: { "@id": ORG_ID },
+    dateCreated: study.year,
+    keywords: study.stack.join(", "),
+  };
+
   return (
     <>
+      <JsonLd data={caseStudySchema} />
+      <JsonLd
+        data={breadcrumbs(site.url, [
+          ["Home", "/"],
+          ["Work", "/work"],
+          [study.name, null],
+        ])}
+      />
       <PageHeader
         eyebrow="Case Study"
         title={study.name}

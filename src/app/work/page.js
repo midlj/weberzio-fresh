@@ -6,7 +6,7 @@ import CTA from "@/components/landing/CTA";
 import { caseStudies } from "@/data/casestudies";
 
 export const metadata = {
-  title: "Our Work",
+  title: "Our Work — Web & Mobile App Development Portfolio",
   description:
     "A collection of web and mobile applications, SaaS platforms, and digital experiences we've crafted.",
   alternates: { canonical: "/work" },
@@ -17,7 +17,7 @@ export default function WorkPage() {
     <>
       <PageHeader
         eyebrow="Portfolio"
-        title="Our work portfolio."
+        title="Web & mobile app development portfolio."
         intro="A collection of web and mobile applications, SaaS platforms, and digital experiences we've crafted."
       />
 

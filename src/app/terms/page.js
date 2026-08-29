@@ -3,7 +3,7 @@ import CTA from "@/components/landing/CTA";
 import { site } from "@/data/site";
 
 export const metadata = {
-  title: "Terms & Conditions | Weberzio Web Development Agency",
+  title: "Terms & Conditions",
   description: `The rules and legal terms that govern your use of the ${site.name} website and services.`,
   alternates: { canonical: "/terms" },
 };

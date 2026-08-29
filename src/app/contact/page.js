@@ -5,7 +5,7 @@ import CTA from "@/components/landing/CTA";
 import { contact } from "@/data/site";
 
 export const metadata = {
-  title: "Contact",
+  title: "Contact Us — Software Development Company in Kerala",
   description:
     "Tell us what you're building and we'll get back to you within one business day with next steps.",
   alternates: { canonical: "/contact" },

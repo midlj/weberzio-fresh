@@ -15,7 +15,7 @@ export default function ServicesPage() {
     <>
       <PageHeader
         eyebrow="Services"
-        title="Services we offer."
+        title="Software development services in Kerala."
         intro="Web applications, SaaS platforms, APIs, cloud infrastructure, and the technical guidance to keep it all moving forward."
       />
 

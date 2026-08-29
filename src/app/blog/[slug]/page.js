@@ -2,7 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import CTA from "@/components/landing/CTA";
+import JsonLd, { ORG_ID, breadcrumbs } from "@/components/seo/JsonLd";
 import { posts, getPost } from "@/data/posts";
+import { site } from "@/data/site";
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
@@ -36,8 +38,30 @@ export default async function BlogPostPage({ params }) {
 
   const others = posts.filter((item) => item.slug !== post.slug);
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: { "@type": "Person", name: post.author },
+    publisher: { "@id": ORG_ID },
+    mainEntityOfPage: `${site.url}/blog/${post.slug}`,
+    articleSection: post.category,
+    inLanguage: "en",
+  };
+
   return (
     <>
+      <JsonLd data={articleSchema} />
+      <JsonLd
+        data={breadcrumbs(site.url, [
+          ["Home", "/"],
+          ["Blog", "/blog"],
+          [post.title, null],
+        ])}
+      />
       {/* Article header */}
       <section className="relative overflow-hidden bg-white px-5 pb-12 pt-16 sm:px-8 sm:pb-16 sm:pt-24">
         <div

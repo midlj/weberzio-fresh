@@ -49,7 +49,7 @@ export default function FluidCanvas() {
           densityDissipation: 1.4,
           velocityDissipation: 0.8,
           curl: 4,
-          splatRadius: 0.06,
+          splatRadius: 0.09,
           transparent: true,
           bloom: true,
           bloomIntensity: 0.25,
@@ -82,7 +82,7 @@ export default function FluidCanvas() {
         if (!sim) return;
         hue = (hue + 1) % HUES.length;
         sim.setConfig({ colorPalette: [HUES[hue]] });
-      }, 4000);
+      }, 1500);
       cleanups.push(() => clearInterval(rotate));
 
       const bufferX = (xCss) =>
@@ -161,7 +161,7 @@ export default function FluidCanvas() {
     <div
       ref={wrapper}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 overflow-hidden opacity-60"
     />
   );
 }
