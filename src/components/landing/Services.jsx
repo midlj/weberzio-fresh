@@ -36,55 +36,55 @@ export function ServiceCards() {
   }, []);
 
   return (
-    /*
-     * Two wide columns. Each tile hangs 16px past its card's top-left corner,
-     * so the grid reserves that much on both axes to keep them from clipping,
-     * and the row gap leaves room for the next row's tiles.
-     */
-    <div
-      ref={root}
-      className="grid gap-x-9 gap-y-12 pl-4 pt-4 md:grid-cols-2"
-    >
+    <div ref={root} className="grid gap-7 md:grid-cols-2">
       {services.map((service) => (
         <Link
           key={service.slug}
           data-service
           href={`/services/${service.slug}`}
-          className="group relative flex flex-col rounded-[26px] bg-white px-8 pb-8 pt-16 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] transition-shadow duration-300 hover:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_22px_48px_-16px_rgba(0,0,0,0.22)]"
+          className="group relative flex flex-col overflow-hidden rounded-[26px] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] transition-shadow duration-300 hover:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_26px_56px_-18px_rgba(0,0,0,0.24)]"
         >
-          {/*
-            Overlaps the card's top-left corner: only ~16px of the 64px tile
-            hangs outside each edge, so most of it rests on the card rather
-            than floating off in the gutter.
-          */}
-          <span className="absolute -left-4 -top-4 flex h-16 w-16 items-center justify-center rounded-[18px] bg-neutral-900 text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)] transition-colors duration-300 group-hover:bg-[#e23a2e]">
-            <ServiceIcon slug={service.slug} className="h-[26px] w-[26px]" />
+          {/* Brand hairline sweeps across the top edge on hover. */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-hr-red to-[#ff8a3d] transition-transform duration-500 group-hover:scale-x-100"
+          />
+
+          {/* Ghost index bleeding off the top-right corner. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-5 right-6 font-display text-[96px] font-bold leading-none tracking-tight text-neutral-900/[0.05] transition-colors duration-300 group-hover:text-hr-red/[0.09]"
+          >
+            {service.number}
           </span>
 
-          {/* Sits below the tile, flush with the card's own left padding. */}
-          <h3 className="text-[19px] font-semibold leading-snug text-neutral-800">
+          <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-neutral-900 text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)] transition-all duration-300 group-hover:-rotate-6 group-hover:scale-105 group-hover:bg-hr-red group-hover:shadow-[0_12px_28px_-8px_rgba(226,58,46,0.5)]">
+            <ServiceIcon slug={service.slug} className="h-[24px] w-[24px]" />
+          </span>
+
+          <h3 className="relative mt-6 text-[19px] font-semibold leading-snug text-neutral-800">
             {service.title}
           </h3>
 
-          <p className="mt-3 font-body text-[14px] leading-relaxed text-neutral-500">
+          <p className="relative mt-3 font-body text-[14px] leading-relaxed text-neutral-500">
             {service.summary}
           </p>
 
           {/* flex-1 pushes the footer down, so every card's rule lines up. */}
-          <ul className="mt-5 flex flex-1 flex-wrap content-start gap-2">
+          <ul className="relative mt-5 flex flex-1 flex-wrap content-start gap-2">
             {service.stack.slice(0, 4).map((tech) => (
               <li
                 key={tech}
-                className="rounded-lg bg-neutral-100 px-2.5 py-1 font-body text-[12.5px] text-neutral-500 transition-colors group-hover:bg-neutral-50"
+                className="rounded-full border border-neutral-200 px-3 py-1 font-body text-[12px] text-neutral-500 transition-colors duration-300 group-hover:border-neutral-300"
               >
                 {tech}
               </li>
             ))}
           </ul>
 
-          <span className="mt-7 flex items-center justify-between border-t border-neutral-100 pt-5 font-body text-[13.5px] font-medium text-neutral-400 transition-colors group-hover:text-[#e23a2e]">
+          <span className="relative mt-7 flex items-center justify-between border-t border-neutral-100 pt-5 font-body text-[13.5px] font-medium text-neutral-400 transition-colors group-hover:text-hr-red">
             Explore service
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-all duration-300 group-hover:bg-[#e23a2e] group-hover:text-white">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-hr-red group-hover:text-white">
               <svg
                 width="14"
                 height="14"
