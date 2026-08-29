@@ -124,7 +124,12 @@ export default function ContactPage() {
       <section className="bg-neutral-100 px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto grid max-w-6xl items-start gap-8 lg:grid-cols-[1.35fr_1fr]">
           {/* Form card — raised off the tinted field, matching the service cards. */}
-          <div className="rounded-[26px] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] sm:p-10">
+          <div className="relative overflow-hidden rounded-[26px] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] sm:p-10">
+            {/* Static brand hairline anchors the primary card. */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-hr-red to-[#ff8a3d]"
+            />
             <h2 className="text-[22px] font-semibold tracking-tight text-neutral-800">
               Send us a message
             </h2>
@@ -139,17 +144,28 @@ export default function ContactPage() {
           </div>
 
           {/* Balances the taller sidebar and answers the usual pre-brief doubts. */}
-          <div className="rounded-[26px] border border-neutral-200 p-8 lg:col-start-1 lg:row-start-2">
-            <p className="font-body text-[12px] uppercase tracking-[0.16em] text-neutral-400">
+          <div className="relative overflow-hidden rounded-[26px] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] lg:col-start-1 lg:row-start-2">
+            {/* Ghost glyph, same family as the numbered cards elsewhere. */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-7 right-6 font-display text-[110px] font-bold leading-none text-neutral-900/[0.04]"
+            >
+              ?
+            </span>
+            <p className="relative font-body text-[12px] uppercase tracking-[0.16em] text-neutral-400">
               Before you write
             </p>
-            <dl className="mt-6 grid gap-6 sm:grid-cols-2">
+            <dl className="relative mt-6 grid gap-6 sm:grid-cols-2">
               {briefingNotes.map((note) => (
                 <div key={note.question}>
-                  <dt className="text-[14.5px] font-medium text-neutral-800">
+                  <dt className="flex items-center gap-2 text-[14.5px] font-medium text-neutral-800">
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-hr-red"
+                    />
                     {note.question}
                   </dt>
-                  <dd className="mt-1.5 font-body text-[13.5px] leading-relaxed text-neutral-500">
+                  <dd className="mt-1.5 pl-3.5 font-body text-[13.5px] leading-relaxed text-neutral-500">
                     {note.answer}
                   </dd>
                 </div>
@@ -197,8 +213,12 @@ export default function ContactPage() {
             </div>
 
             {/* Dark panel anchors the column and echoes the site's hero. */}
-            <div className="rounded-[26px] bg-neutral-900 p-8 text-white">
-              <p className="font-body text-[12px] uppercase tracking-[0.16em] text-white/40">
+            <div className="relative overflow-hidden rounded-[26px] bg-neutral-900 p-8 text-white">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-20 h-52 w-52 rounded-full bg-hr-red/20 blur-[80px]"
+              />
+              <p className="relative font-body text-[12px] uppercase tracking-[0.16em] text-white/40">
                 What happens next
               </p>
 

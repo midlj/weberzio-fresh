@@ -28,6 +28,18 @@ function SectionLabel({ children }) {
   );
 }
 
+/** Splits "10+" / "98%" so the suffix can carry the brand red. */
+function StatValue({ value }) {
+  const match = value.match(/^([\d.]+)(.*)$/);
+  if (!match) return value;
+  return (
+    <>
+      {match[1]}
+      {match[2] && <span className="text-hr-red">{match[2]}</span>}
+    </>
+  );
+}
+
 export default function AboutPage() {
   return (
     <>
@@ -40,7 +52,7 @@ export default function AboutPage() {
       {/* Who we are + stats */}
       <section className="bg-white px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 lg:grid-cols-[1fr_320px] lg:gap-20">
+          <div className="grid gap-12 lg:grid-cols-[1fr_340px] lg:gap-20">
             <div>
               <SectionLabel>Who we are</SectionLabel>
               <div className="mt-6 space-y-6">
@@ -55,13 +67,23 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-200 self-start">
-              {aboutStats.map((stat) => (
-                <div key={stat.label} className="bg-neutral-50 p-6">
-                  <p className="text-[28px] font-semibold tracking-tight text-neutral-900">
-                    {stat.value}
+            {/* Dark stat panel — echoes the site's black frame on the white page. */}
+            <div className="relative grid grid-cols-2 self-center overflow-hidden rounded-[26px] bg-neutral-900">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-hr-red/25 blur-[80px]"
+              />
+              {aboutStats.map((stat, index) => (
+                <div
+                  key={stat.label}
+                  className={`relative p-7 ${index % 2 === 1 ? "border-l border-white/10" : ""} ${
+                    index > 1 ? "border-t border-white/10" : ""
+                  }`}
+                >
+                  <p className="font-display text-[34px] font-semibold tracking-tight text-white">
+                    <StatValue value={stat.value} />
                   </p>
-                  <p className="mt-1 font-body text-[12.5px] text-neutral-500">
+                  <p className="mt-1 font-body text-[12.5px] text-white/50">
                     {stat.label}
                   </p>
                 </div>
@@ -83,15 +105,26 @@ export default function AboutPage() {
             {principles.map((principle) => (
               <div
                 key={principle.number}
-                className="rounded-2xl border border-neutral-200 bg-white p-7"
+                className="group relative overflow-hidden rounded-[26px] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)] transition-shadow duration-300 hover:shadow-[0_1px_2px_rgba(0,0,0,0.05),0_26px_56px_-18px_rgba(0,0,0,0.24)]"
               >
-                <p className="font-body text-[13px] font-semibold text-[#e23a2e]">
+                {/* Brand hairline sweeps across the top edge on hover. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-hr-red to-[#ff8a3d] transition-transform duration-500 group-hover:scale-x-100"
+                />
+
+                {/* Ghost index bleeding off the top-right corner. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-5 right-6 font-display text-[96px] font-bold leading-none tracking-tight text-neutral-900/[0.05] transition-colors duration-300 group-hover:text-hr-red/[0.09]"
+                >
                   {principle.number}
-                </p>
-                <h3 className="mt-3 text-[18px] font-semibold text-neutral-900">
+                </span>
+
+                <h3 className="relative mt-6 pr-14 text-[18px] font-semibold text-neutral-900">
                   {principle.title}
                 </h3>
-                <p className="mt-3 font-body text-[14px] leading-relaxed text-neutral-500">
+                <p className="relative mt-3 font-body text-[14px] leading-relaxed text-neutral-500">
                   {principle.body}
                 </p>
               </div>
@@ -112,13 +145,14 @@ export default function AboutPage() {
             {aboutProcess.map((step, index) => (
               <div key={step.number} className="relative">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#e23a2e]/30 bg-[#e23a2e]/10 font-body text-[13px] font-semibold text-[#c02a20]">
+                  {/* Dark squircle badge, same family as the service icon tiles. */}
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-900 font-body text-[13px] font-semibold text-white">
                     {step.number}
                   </span>
                   {index < aboutProcess.length - 1 && (
                     <span
                       aria-hidden="true"
-                      className="hidden h-px flex-1 bg-neutral-200 lg:block"
+                      className="hidden h-px flex-1 bg-gradient-to-r from-neutral-300 to-neutral-100 lg:block"
                     />
                   )}
                 </div>
@@ -142,20 +176,31 @@ export default function AboutPage() {
             The tools we reach for by default.
           </h2>
 
-          <div className="mt-12 overflow-hidden rounded-2xl border border-neutral-200 bg-white">
-            {toolStack.map((row, index) => (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {toolStack.map((row) => (
               <div
                 key={row.area}
-                className={`flex flex-col gap-1 px-7 py-5 sm:flex-row sm:items-center sm:gap-10 ${
-                  index > 0 ? "border-t border-neutral-100" : ""
-                }`}
+                className="rounded-[26px] bg-white p-7 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_14px_36px_-14px_rgba(0,0,0,0.13)]"
               >
-                <p className="w-28 shrink-0 font-body text-[13px] font-semibold uppercase tracking-[0.12em] text-[#c02a20]">
-                  {row.area}
-                </p>
-                <p className="font-body text-[15px] text-neutral-600">
-                  {row.tools}
-                </p>
+                <div className="flex items-center gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    className="h-2 w-2 rounded-full bg-hr-red"
+                  />
+                  <p className="font-body text-[12px] font-semibold uppercase tracking-[0.14em] text-neutral-900">
+                    {row.area}
+                  </p>
+                </div>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {row.tools.split(", ").map((tool) => (
+                    <li
+                      key={tool}
+                      className="rounded-full border border-neutral-200 px-3 py-1 font-body text-[13px] text-neutral-600"
+                    >
+                      {tool}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -183,23 +228,33 @@ export default function AboutPage() {
                 <p className="font-body text-[14px] leading-relaxed text-neutral-500">
                   {service.summary}
                 </p>
+                <span
+                  aria-hidden="true"
+                  className="hidden self-center text-hr-red opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:block"
+                >
+                  →
+                </span>
               </Link>
             ))}
           </div>
 
-          {/* Inline CTA band */}
-          <div className="mt-20 rounded-2xl border border-neutral-200 bg-neutral-50 p-8 sm:flex sm:items-center sm:justify-between sm:p-10">
-            <div>
-              <h3 className="text-[22px] font-semibold tracking-tight text-neutral-900">
+          {/* Inline CTA band — dark, mirrors the hero's CTA styling. */}
+          <div className="relative mt-20 overflow-hidden rounded-[26px] bg-neutral-900 p-8 sm:flex sm:items-center sm:justify-between sm:gap-10 sm:p-10">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -left-20 -top-24 h-56 w-72 rounded-full bg-hr-red/20 blur-[90px]"
+            />
+            <div className="relative">
+              <h3 className="text-[22px] font-semibold tracking-tight text-white">
                 {aboutCta.title}
               </h3>
-              <p className="mt-2 max-w-xl font-body text-[14.5px] leading-relaxed text-neutral-500">
+              <p className="mt-2 max-w-xl font-body text-[14.5px] leading-relaxed text-white/60">
                 {aboutCta.body}
               </p>
             </div>
             <Link
               href="/contact"
-              className="mt-6 inline-flex shrink-0 items-center gap-2.5 rounded-full bg-neutral-900 px-6 py-3.5 font-display text-[14px] font-semibold text-white transition-colors hover:bg-neutral-700 sm:mt-0"
+              className="relative mt-6 inline-flex shrink-0 items-center gap-2.5 rounded-full bg-white px-6 py-3.5 font-display text-[14px] font-semibold text-black transition-colors hover:bg-white/85 sm:mt-0"
             >
               <span aria-hidden="true" className="h-2 w-2 rounded-full bg-hr-red" />
               {aboutCta.label}

@@ -267,9 +267,12 @@ export default function ContactForm() {
       <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-3">
         <button
           type="submit"
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-7 py-3.5 text-[14.5px] font-semibold text-white transition-colors hover:bg-neutral-700 sm:w-auto"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-7 py-3.5 text-[14.5px] font-semibold text-white transition-colors hover:bg-hr-red sm:w-auto"
         >
-          <span aria-hidden="true" className="mr-0.5 h-2 w-2 rounded-full bg-hr-red" />
+          <span
+            aria-hidden="true"
+            className="mr-0.5 h-2 w-2 rounded-full bg-hr-red transition-colors group-hover:bg-white"
+          />
           Send message
           <Arrow className="transition-transform duration-200 group-hover:translate-x-1" />
         </button>
