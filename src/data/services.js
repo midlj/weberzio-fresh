@@ -1,4 +1,25 @@
-/** The six service offerings. `slug` drives the /services/[slug] routes. */
+/**
+ * The six service offerings, synced verbatim from the live site.
+ * `slug` drives the /services/[slug] routes. `summary` is shown on listing
+ * cards (/services, /about, home) and `body` on the detail page — the live
+ * site uses the same description in both places.
+ */
+
+const DESCRIPTIONS = {
+  "web-application-development":
+    "As Kerala's premier web and mobile app development team, Weberzio designs production-grade web applications. We utilize modern frameworks like Next.js, React, and Astro alongside robust MERN stack foundations to deliver clean architecture, seamless UX, and exceptional Core Web Vitals.",
+  "saas-product-engineering":
+    "We partner with startups and enterprises to architect complete SaaS ecosystems. From web-based admin dashboards in React to cross-platform mobile experiences using Flutter, our engineering studio builds secure, scalable, and multi-tenant software platforms.",
+  "api-backend-systems":
+    "We engineer the backbone of your digital infrastructure. Specializing in Node.js and scalable database technologies, our team builds secure REST and GraphQL APIs, event-driven microservices, and reliable background processing systems designed for high-throughput environments.",
+  "cloud-infrastructure-devops":
+    "Weberzio ensures your applications are highly available and effortlessly scalable. We design robust DevOps workflows, containerized environments, and Infrastructure as Code (IaC) solutions on AWS and Vercel, enabling engineering teams to ship confidently without downtime.",
+  "ecommerce-solutions":
+    "We engineer sophisticated digital storefronts that drive revenue. By leveraging Next.js, React, and modern headless commerce architectures, our team crafts blazing-fast, SEO-optimized e-commerce experiences with seamless checkout flows and complex inventory integrations.",
+  "technical-consulting":
+    "As an expert engineering studio based in India, Weberzio provides high-level technical oversight. We offer in-depth architecture audits, tech-stack evaluations (across Flutter, React, Node.js, and more), and strategic guidance to help you navigate technical debt and scale your engineering capabilities.",
+};
+
 export const services = [
   {
     slug: "web-application-development",
@@ -6,9 +27,8 @@ export const services = [
     title: "Web Application Development",
     tagline:
       "High-performance, scalable web platforms built with Next.js, React, and the MERN stack.",
-    summary:
-      "Production-grade applications using Next.js, React, and Astro alongside robust MERN stack foundations, focused on clean architecture, seamless UX, and exceptional Core Web Vitals.",
-    body: "Weberzio is Kerala's premier web and mobile app development team, designing production-grade applications with clean architecture, seamless UX, and exceptional Core Web Vitals.",
+    summary: DESCRIPTIONS["web-application-development"],
+    body: DESCRIPTIONS["web-application-development"],
     stack: ["Next.js", "React", "MERN Stack", "Astro", "TypeScript"],
     included: [
       "Server-rendered Next.js and Astro applications optimized for technical SEO and measurable performance",
@@ -22,15 +42,14 @@ export const services = [
     number: "02",
     title: "SaaS & Digital Product Engineering",
     tagline: "Transforming concepts into resilient web and mobile platforms.",
-    summary:
-      "We partner with startups and enterprises to architect complete SaaS ecosystems, including React dashboards and Flutter mobile experiences.",
-    body: "We partner with startups and enterprises to build complete SaaS ecosystems — React dashboards, Flutter mobile apps, and secure multi-tenant platforms.",
-    stack: ["Flutter", "Node.js", "React", "PostgreSQL", "Stripe"],
+    summary: DESCRIPTIONS["saas-product-engineering"],
+    body: DESCRIPTIONS["saas-product-engineering"],
+    stack: ["SaaS Development", "Flutter", "Node.js", "React", "Product Engineering"],
     included: [
-      "Architecturally sound multi-tenant systems with role-based access control",
-      "Cross-platform mobile applications using Flutter for iOS and Android",
-      "Complex subscription billing with tiered metering and payment integrations",
-      "Product analytics dashboards with feature flagging and admin tooling",
+      "Architecturally sound multi-tenant systems with fine-grained role-based access control",
+      "Cross-platform mobile applications engineered with Flutter for seamless iOS and Android delivery",
+      "Complex subscription billing, tiered metering, and frictionless payment gateway integrations",
+      "Data-rich product analytics dashboards, feature flagging, and internal administrative tooling",
     ],
   },
   {
@@ -39,10 +58,9 @@ export const services = [
     title: "API & Backend Systems",
     tagline:
       "Secure, observable, and highly available architectures powered by Node.js.",
-    summary:
-      "Secure REST and GraphQL APIs, event-driven microservices, and reliable background processing built for high-throughput environments.",
-    body: "We engineer the backbone of your digital infrastructure. Specializing in Node.js and scalable database technologies, our team builds secure REST and GraphQL APIs, event-driven microservices, and reliable background processing systems designed for high-throughput environments.",
-    stack: ["Node.js", "REST APIs", "GraphQL", "Microservices", "Redis"],
+    summary: DESCRIPTIONS["api-backend-systems"],
+    body: DESCRIPTIONS["api-backend-systems"],
+    stack: ["Node.js", "REST APIs", "GraphQL", "Microservices", "Backend Architecture"],
     included: [
       "Strictly typed, comprehensively documented REST and GraphQL API contracts",
       "Fault-tolerant background workers, message queues, and resilient event-driven pipelines",
@@ -56,12 +74,11 @@ export const services = [
     title: "Cloud Infrastructure & DevOps",
     tagline:
       "Reliable deployments, automated pipelines, and optimized cloud orchestration.",
-    summary:
-      "DevOps workflows, containerized environments, and Infrastructure as Code solutions on AWS and Vercel.",
-    body: "Weberzio ensures your applications are highly available and effortlessly scalable. We design robust DevOps workflows, containerized environments, and Infrastructure as Code (IaC) solutions on AWS and Vercel, enabling engineering teams to ship confidently without downtime.",
-    stack: ["DevOps", "AWS", "Vercel", "CI/CD", "Terraform"],
+    summary: DESCRIPTIONS["cloud-infrastructure-devops"],
+    body: DESCRIPTIONS["cloud-infrastructure-devops"],
+    stack: ["DevOps", "AWS", "Vercel", "CI/CD", "Infrastructure as Code"],
     included: [
-      "Immutable Infrastructure as Code provisioning via Terraform and modern cloud SDKs",
+      "Immutable Infrastructure as Code (IaC) provisioning via Terraform and modern cloud SDKs",
       "Advanced CI/CD pipelines featuring automated testing and ephemeral preview environments",
       "Comprehensive observability stacks encompassing alerts, metric dashboards, and log aggregation",
       "Strategic cloud cost optimization, architecture reviews, and capacity rightsizing recommendations",
@@ -73,15 +90,14 @@ export const services = [
     title: "High-Conversion E-commerce Solutions",
     tagline:
       "Headless storefronts and custom commerce platforms built for speed and scale.",
-    summary:
-      "Blazing-fast, SEO-optimized e-commerce experiences with seamless checkout flows that drive revenue.",
-    body: "We build sophisticated digital storefronts that drive revenue, using Next.js, React, and headless commerce architecture for blazing-fast, SEO-optimized experiences.",
-    stack: ["Next.js", "React", "Shopify", "Stripe", "Headless CMS"],
+    summary: DESCRIPTIONS["ecommerce-solutions"],
+    body: DESCRIPTIONS["ecommerce-solutions"],
+    stack: ["Headless Commerce", "Next.js", "React", "E-commerce", "Stripe"],
     included: [
-      "Performant headless storefronts with Shopify and custom backend integration",
-      "Conversion-optimized checkout with secure payment gateways",
-      "Real-time synchronization for inventory and order management",
-      "Content-driven merchandising via CMS and static site generation",
+      "Performant headless storefronts integrated with modern platforms like Shopify and custom backends",
+      "Frictionless, conversion-optimized checkout experiences and secure payment gateway integrations",
+      "Real-time synchronization for complex product catalogs, inventory systems, and order management",
+      "Content-driven merchandizing capabilities utilizing modern CMS and static site generation",
     ],
   },
   {
@@ -90,9 +106,8 @@ export const services = [
     title: "Technical Consulting & Strategy",
     tagline:
       "Senior engineering perspectives for architecture, scaling, and technology strategy.",
-    summary:
-      "Architecture audits, tech-stack evaluations, and Fractional CTO services from an expert engineering studio.",
-    body: "An expert engineering studio based in India, offering high-level technical oversight across architecture review, tech strategy, code audits, and Fractional CTO engagements.",
+    summary: DESCRIPTIONS["technical-consulting"],
+    body: DESCRIPTIONS["technical-consulting"],
     stack: [
       "Architecture Review",
       "Tech Strategy",

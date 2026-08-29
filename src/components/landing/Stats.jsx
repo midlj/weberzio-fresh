@@ -127,7 +127,7 @@ export default function Stats() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div data-heading>
-            <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+            <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
               Why teams choose us
             </p>
             <h2 className="mt-4 text-[34px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">
@@ -137,16 +137,29 @@ export default function Stats() {
             </h2>
           </div>
 
-          <p className="font-body text-[15px] leading-relaxed text-neutral-500 sm:text-[16.5px]">
-            A small team with deep engineering expertise. Weberzio partners with
-            founders, product teams, and enterprises to design and build
-            software solving real problems — from early-stage MVPs to
-            production-grade platforms, owning the full stack.
-          </p>
+          <div className="space-y-4 font-body text-[15px] leading-relaxed text-neutral-500 sm:text-[16.5px]">
+            <p>
+              A small team with deep engineering expertise. Weberzio partners
+              with founders, product teams, and enterprises to design and build
+              software that solves real problems. From early-stage MVPs to
+              production-grade platforms, we own the full stack.
+            </p>
+            <p>
+              Our engineers care about clean architecture, performance, and
+              code that&apos;s easy to maintain. Ship fast, ship stable, and
+              build for what comes next.
+            </p>
+          </div>
         </div>
 
+        <p className="mt-14 max-w-2xl font-body text-[15px] leading-relaxed text-neutral-500">
+          We help startups and enterprises turn ambitious ideas into
+          production-ready software — from the first commit through years of
+          scale.
+        </p>
+
         {/* Numbers read as a row of measures, divided by hairlines. */}
-        <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-12 lg:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} data-stat>
               <p
@@ -159,10 +172,13 @@ export default function Stats() {
               <div
                 data-rule
                 aria-hidden="true"
-                className="mt-5 h-px w-full bg-[#22c55e]"
+                className="mt-5 h-px w-full bg-[#e23a2e]"
               />
-              <p className="mt-4 font-body text-[13.5px] text-neutral-500">
+              <p className="mt-4 font-body text-[13.5px] font-medium text-neutral-700">
                 {stat.label}
+              </p>
+              <p className="mt-1.5 font-body text-[12.5px] leading-relaxed text-neutral-400">
+                {stat.description}
               </p>
             </div>
           ))}

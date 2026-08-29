@@ -107,7 +107,7 @@ export default function ContactPage() {
                 height="15"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#22c55e"
+                stroke="#e23a2e"
                 strokeWidth="2.6"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -177,7 +177,7 @@ export default function ContactPage() {
                         rel={external ? "noopener noreferrer" : undefined}
                         className="group -mx-3 flex items-center gap-4 rounded-2xl px-3 py-3 transition-colors hover:bg-neutral-50"
                       >
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-neutral-900 text-white transition-colors duration-300 group-hover:bg-[#22c55e]">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-neutral-900 text-white transition-colors duration-300 group-hover:bg-[#e23a2e]">
                           <ContactIcon name={item.icon} className="h-5 w-5" />
                         </span>
 
@@ -185,7 +185,7 @@ export default function ContactPage() {
                           <span className="block font-body text-[12.5px] text-neutral-400">
                             {item.label}
                           </span>
-                          <span className="block truncate font-body text-[15px] font-medium text-neutral-800 transition-colors group-hover:text-[#22c55e]">
+                          <span className="block truncate font-body text-[15px] font-medium text-neutral-800 transition-colors group-hover:text-[#e23a2e]">
                             {item.value}
                           </span>
                         </span>

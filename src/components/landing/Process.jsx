@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 /** Four-phase engagement model, shown on /services and each service page. */
 export default function Process({
   title = "Four phases, no surprises",
-  intro = "No surprises, no scope creep, and no invoices you haven't seen coming.",
+  intro = "A predictable four-phase engagement. No surprises, no scope creep, and no invoices you haven't seen coming.",
 }) {
   const root = useRef(null);
 
@@ -40,7 +40,7 @@ export default function Process({
     <section ref={root} className="bg-white px-5 py-24 sm:px-8 sm:py-32">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
             How we work
           </p>
           <h2 className="mt-4 text-[32px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">
@@ -58,13 +58,13 @@ export default function Process({
               data-phase
               className="rounded-2xl border border-neutral-200 bg-neutral-50 p-7"
             >
-              <span className="text-[12px] font-semibold text-[#22c55e]">
+              <span className="text-[12px] font-semibold text-[#e23a2e]">
                 {phase.step}
               </span>
               <h3 className="mt-4 text-[18px] font-semibold text-neutral-800">
                 {phase.title}
               </h3>
-              <p className="mt-1.5 font-body text-[13.5px] text-[#22c55e]">
+              <p className="mt-1.5 font-body text-[13.5px] text-[#e23a2e]">
                 {phase.summary}
               </p>
               <p className="mt-3 font-body text-[14px] leading-relaxed text-neutral-500">

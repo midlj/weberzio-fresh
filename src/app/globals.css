@@ -32,8 +32,8 @@
 
 
 @theme {
-  --color-hr-green: #39e08a;
-  --color-hr-green-bright: #4ef39b;
+  --color-hr-red: #e23a2e;
+  --color-hr-red-bright: #f4564a;
   --color-hr-ink: #0a0a0a;
   --color-hr-panel: #121417;
   --color-hr-card: #16191d;

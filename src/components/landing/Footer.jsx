@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -29,7 +30,8 @@ const columns = [
     title: "Company",
     links: [
       { label: "Our work", href: "/work" },
-      { label: "About", href: "/#about" },
+      { label: "About", href: "/about" },
+      { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
       { label: "Terms & Conditions", href: "/terms" },
     ],
@@ -76,7 +78,16 @@ function FooterLink({ href, children }) {
 
 export default function Footer() {
   const root = useRef(null);
+  const pathname = usePathname();
 
+  /*
+   * Keyed on pathname: the footer lives in the root layout, so it survives
+   * client-side navigations while each new page changes the document height.
+   * A ScrollTrigger created on the previous page keeps that page's start
+   * position - navigate from a tall page to a short one and the trigger can
+   * sit beyond max scroll, leaving the columns stuck at opacity 0. Rebuilding
+   * the context per route re-measures against the current page.
+   */
   useEffect(() => {
     const context = gsap.context((self) => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -96,7 +107,7 @@ export default function Footer() {
     }, root);
 
     return () => context.revert();
-  }, []);
+  }, [pathname]);
 
   return (
     <footer ref={root} className="border-t border-white/10 bg-black px-5 py-16 sm:px-8">

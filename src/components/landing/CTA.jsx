@@ -47,7 +47,7 @@ export default function CTA() {
       <div
         data-cta-glow
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[700px] max-w-[110vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hr-green/12 blur-[130px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[360px] w-[700px] max-w-[110vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hr-red/12 blur-[130px]"
       />
 
       <div className="relative mx-auto max-w-3xl text-center">
@@ -57,7 +57,7 @@ export default function CTA() {
         >
           Ready to build your
           <br />
-          <span className="text-hr-green">next project?</span>
+          <span className="text-hr-red">next project?</span>
         </h2>
 
         <p
@@ -72,8 +72,9 @@ export default function CTA() {
           <Link
             data-cta-button
             href="/contact"
-            className="w-full rounded-md bg-hr-green px-7 py-3.5 text-[14.5px] font-semibold text-black transition-colors hover:bg-hr-green-bright sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-white px-7 py-3.5 text-[14.5px] font-semibold text-black transition-colors hover:bg-white/85 sm:w-auto"
           >
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-hr-red" />
             Let&rsquo;s talk
           </Link>
           <a
@@ -81,7 +82,7 @@ export default function CTA() {
             href={contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full rounded-md border border-white/15 bg-white/5 px-7 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-white/10 sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-7 py-3.5 text-[14.5px] font-medium text-white transition-colors hover:bg-white/5 sm:w-auto"
           >
             WhatsApp us
           </a>

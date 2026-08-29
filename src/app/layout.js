@@ -2,6 +2,7 @@ import "./globals.css";
 import { manrope } from "./fonts";
 import { site } from "@/data/site";
 import Frame from "@/components/layout/Frame";
+import SmoothScroll from "@/components/layout/SmoothScroll";
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
 import CookieBanner from "@/components/landing/CookieBanner";
@@ -43,6 +44,7 @@ export default function RootLayout({ children }) {
           <style>{`[data-hero-line],[data-hero-copy],[data-hero-cta]{opacity:1 !important}`}</style>
         </noscript>
 
+        <SmoothScroll />
         <Frame>
           <div id="top" className="relative">
             <Header />

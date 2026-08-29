@@ -9,9 +9,10 @@ import OverlayMenu from "./OverlayMenu";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Work", href: "/work" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -127,8 +128,8 @@ export default function Header() {
           <span className="grid grid-cols-2 gap-[2px]" aria-hidden="true">
             <span className="h-[7px] w-[7px] rounded-[2px] bg-[#f5c451]" />
             <span className="h-[7px] w-[7px] rounded-[2px] bg-[#4aa3f0]" />
-            <span className="h-[7px] w-[7px] rounded-[2px] bg-[#e0554e]" />
-            <span className="h-[7px] w-[7px] rounded-[2px] bg-hr-green" />
+            <span className="h-[7px] w-[7px] rounded-[2px] bg-[#8b93f8]" />
+            <span className="h-[7px] w-[7px] rounded-[2px] bg-hr-red" />
           </span>
           <span className="text-[19px] tracking-tight">
             <span className="font-bold">weber</span>

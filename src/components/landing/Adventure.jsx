@@ -7,10 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Small green plus used as the bullet marker inside both cards. */
+/** Small red plus used as the bullet marker inside both cards. */
 function Plus() {
   return (
-    <span aria-hidden="true" className="mt-[3px] shrink-0 text-hr-green">
+    <span aria-hidden="true" className="mt-[3px] shrink-0 text-hr-red">
       +
     </span>
   );
@@ -50,8 +50,8 @@ function EditorMock() {
         <p className="text-[10px] text-white/35">app / dashboard</p>
         <p className="mt-1.5 text-[19px] font-semibold text-white">page.tsx</p>
 
-        <p className="mt-3 inline-flex items-center gap-1.5 rounded bg-hr-green/15 px-2 py-1 text-[10px] font-medium text-hr-green">
-          <span className="h-2 w-2 rounded-[2px] bg-hr-green" />
+        <p className="mt-3 inline-flex items-center gap-1.5 rounded bg-hr-red/15 px-2 py-1 text-[10px] font-medium text-hr-red">
+          <span className="h-2 w-2 rounded-[2px] bg-hr-red" />
           Deployed to staging
         </p>
 
@@ -78,7 +78,7 @@ function EditorMock() {
 function CloudMock() {
   return (
     <div data-art className="pointer-events-none absolute bottom-0 right-0 hidden h-full w-[46%] sm:block">
-      <div className="absolute right-6 top-12 flex h-[86px] w-[86px] items-center justify-center rounded-2xl bg-gradient-to-br from-[#6ff3b8] to-[#0f9e77] text-[17px] font-bold text-black shadow-[0_0_50px_-8px_rgba(57,224,138,0.7)]">
+      <div className="absolute right-6 top-12 flex h-[86px] w-[86px] items-center justify-center rounded-2xl bg-gradient-to-br from-[#ff8577] to-[#a8241a] text-[17px] font-bold text-black shadow-[0_0_50px_-8px_rgba(226,58,46,0.7)]">
           Cloud
       </div>
 
@@ -90,12 +90,12 @@ function CloudMock() {
       >
         <defs>
           <linearGradient id="hr-prism" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#39e08a" stopOpacity="0.5" />
+            <stop offset="0%" stopColor="#e23a2e" stopOpacity="0.5" />
             <stop offset="100%" stopColor="#0b6ea8" stopOpacity="0.15" />
           </linearGradient>
         </defs>
-        <path d="M110 118 210 176 110 234 10 176Z" fill="url(#hr-prism)" stroke="#39e08a" strokeOpacity="0.5" />
-        <path d="M110 118 210 176M110 118 10 176" stroke="#39e08a" strokeOpacity="0.35" />
+        <path d="M110 118 210 176 110 234 10 176Z" fill="url(#hr-prism)" stroke="#e23a2e" strokeOpacity="0.5" />
+        <path d="M110 118 210 176M110 118 10 176" stroke="#e23a2e" strokeOpacity="0.35" />
         {[
           [40, 40],
           [180, 66],
@@ -103,7 +103,7 @@ function CloudMock() {
           [150, 108],
           [26, 96],
         ].map(([x, y]) => (
-          <circle key={`${x}-${y}`} cx={x} cy={y} r="1.6" fill="#9df7c9" opacity="0.7" />
+          <circle key={`${x}-${y}`} cx={x} cy={y} r="1.6" fill="#ffb3a8" opacity="0.7" />
         ))}
       </svg>
     </div>
@@ -204,7 +204,7 @@ export default function Adventure() {
           data-heading
           className="text-center text-[34px] font-semibold leading-tight tracking-tight text-neutral-700 sm:text-[46px]"
         >
-          Choose Your <span className="text-[#22c55e]">Path</span>
+          Choose Your <span className="text-[#e23a2e]">Path</span>
         </h2>
         <p
           data-lead
@@ -239,8 +239,9 @@ export default function Adventure() {
 
               <Link
                 href="/services/saas-product-engineering"
-                className="mt-8 inline-block w-full rounded-md bg-hr-green px-6 py-3 text-center text-[14px] font-semibold text-black transition-colors hover:bg-hr-green-bright"
+                className="mt-8 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-white px-6 py-3 text-[14px] font-semibold text-black transition-colors hover:bg-white/85"
               >
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-hr-red" />
                 Explore product engineering
               </Link>
             </div>
@@ -271,7 +272,7 @@ export default function Adventure() {
 
               <Link
                 href="/services"
-                className="mt-8 inline-block w-full rounded-md bg-white/10 px-6 py-3 text-center text-[14px] font-medium text-white transition-colors hover:bg-white/20"
+                className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/15 px-6 py-3 text-[14px] font-medium text-white transition-colors hover:bg-white/10"
               >
                 Explore all services
               </Link>

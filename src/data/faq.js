@@ -1,33 +1,34 @@
-/** Home-page FAQ, expanded from the source site's question topics. */
+/** Home-page FAQ, synced from the live site. */
 export const faqs = [
   {
-    question: "What kinds of projects do you take on?",
+    question: "What kind of projects do you take on?",
     answer:
-      "Web applications, SaaS platforms, APIs and backend systems, cloud infrastructure, and e-commerce builds — from early-stage MVPs through to production-grade platforms serving real traffic.",
+      "We build custom web applications, mobile apps (Flutter), SaaS platforms, marketing sites, internal tools, and APIs. As a full-stack development team, we work with startups and enterprises to build software that scales.",
   },
   {
-    question: "How do I choose a web development company in Kerala?",
+    question: "How to choose a web development company in Kerala?",
     answer:
-      "Look for a team that shows you working software early rather than slide decks, writes down scope and trade-offs before building, and hands over documentation you can act on. We work that way by default.",
+      "When choosing a web development company in Kerala, look for a team with a strong portfolio, transparent pricing, and deep technical expertise. At Weberzio, we pride ourselves on being one of the best companies for website development in Kerala, focusing on scalable architecture, clear communication, and delivering reliable software.",
   },
   {
-    question: "Do you offer fixed packages?",
+    question: "What are the popular website development packages offered in Kerala?",
     answer:
-      "Engagements are scoped to the outcome, not the hours. After discovery we send a written plan with milestones so there are no surprises, no scope creep, and no invoices you haven't seen coming.",
+      "Popular website development packages typically range from basic corporate landing pages to full-scale e-commerce solutions and custom SaaS platforms. We offer affordable website development services near me in Kerala tailored to your business needs, whether you're a small business or an enterprise.",
   },
   {
-    question: "What affects the cost of a project?",
+    question:
+      "How much does custom web application development cost in Trivandrum or Kochi?",
     answer:
-      "Scope and integration count are the biggest drivers — how many systems we connect to, how much custom logic is involved, and whether you need mobile alongside web. We break this down explicitly during scoping.",
+      "The website development cost in Kerala varies based on complexity. A simple corporate site might be highly affordable, while the cost of custom web application development in Trivandrum or affordable e-commerce website solutions in Kochi depends on the features, integrations, and scale. We share a clear, fixed-price proposal before we begin.",
   },
   {
-    question: "Where is your team located?",
+    question: "Where is your team based?",
     answer:
-      "We're a remote, distributed team operating worldwide, working async across timezones with a response time of around 24 hours.",
+      "We are a premium team of freelance website developers and engineers based in Kerala, India. We partner with local and global clients, providing top-tier custom software solutions and technical consulting.",
   },
   {
-    question: "Can you work with an existing or legacy codebase?",
+    question: "Do you work with existing codebases?",
     answer:
-      "Yes. We run codebase audits, security reviews and architectural modernization reports, and handle legacy migrations — including backend migrations completed without downtime.",
+      "Yes — we frequently audit legacy applications, take over stalled projects, or help existing teams scale. Whether you need top-rated agencies for responsive web design in Calicut to revamp your UI or backend experts to fix performance issues, we map the code and quickly ship the first milestone.",
   },
 ];

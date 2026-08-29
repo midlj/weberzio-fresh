@@ -45,10 +45,10 @@ const STAGES = [
 ];
 
 const ACCENTS = {
-  discovery: "#39e08a",
+  discovery: "#e23a2e",
   design: "#e0a33c",
   scope: "#8b93f8",
-  board: "#39e08a",
+  board: "#e23a2e",
 };
 
 /* ------------------------------------------------------------------ */
@@ -682,11 +682,11 @@ export default function ChangingDev() {
       >
         <div data-heading className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#e23a2e]" />
             Our process
           </span>
           <h2 className="mt-4 text-[30px] font-semibold leading-tight tracking-tight sm:text-[42px]">
-            <span className="text-[#22c55e]">How We</span>
+            <span className="text-[#e23a2e]">How We</span>
             <br />
             <span className="text-neutral-700">Build Software</span>
           </h2>
@@ -720,7 +720,7 @@ export default function ChangingDev() {
                 >
                   <span
                     data-tick
-                    className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#22c55e]"
+                    className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#e23a2e]"
                   />
                   {i < STAGES.length - 1 && (
                     <div
@@ -729,7 +729,7 @@ export default function ChangingDev() {
                     >
                       <span
                         data-rail-fill
-                        className="absolute inset-0 block bg-[#22c55e]"
+                        className="absolute inset-0 block bg-[#e23a2e]"
                       />
                     </div>
                   )}
@@ -750,7 +750,7 @@ export default function ChangingDev() {
                     data-statement
                     className="text-[21px] font-semibold leading-snug tracking-tight text-neutral-800 sm:text-[27px]"
                   >
-                    <span className="text-[#22c55e]">{item.lead}</span>
+                    <span className="text-[#e23a2e]">{item.lead}</span>
                     {item.rest}
                   </p>
                   <p

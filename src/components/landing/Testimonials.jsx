@@ -37,12 +37,18 @@ export default function Testimonials() {
     >
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
             Testimonials
           </p>
           <h2 className="mt-4 text-[32px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">
-            What clients say
+            What our clients
+            <br />
+            are saying.
           </h2>
+          <p className="mt-5 font-body text-[15px] leading-relaxed text-neutral-500">
+            A few kind words from the founders, product leaders, and
+            engineering teams we&apos;ve had the privilege of building with.
+          </p>
         </div>
       </div>
 

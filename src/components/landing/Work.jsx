@@ -57,7 +57,7 @@ export function ProjectList({ items = projects }) {
               <span className="text-[21px] font-semibold text-neutral-900 sm:text-[26px]">
                 {project.name}
               </span>
-              <span className="font-body text-[13.5px] text-[#22c55e]">
+              <span className="font-body text-[13.5px] text-[#e23a2e]">
                 {project.category}
               </span>
             </span>
@@ -107,7 +107,7 @@ export default function Work() {
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+            <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
               Case studies
             </p>
             <h2 className="mt-4 text-[32px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">
@@ -117,7 +117,7 @@ export default function Work() {
 
           <Link
             href="/work"
-            className="rounded-md border border-neutral-300 bg-white px-6 py-3 font-body text-[14px] font-medium text-neutral-800 transition-colors hover:bg-neutral-50"
+            className="rounded-full border border-neutral-300 bg-white px-6 py-3 font-body text-[14px] font-medium text-neutral-800 transition-colors hover:bg-neutral-50"
           >
             View all work
           </Link>

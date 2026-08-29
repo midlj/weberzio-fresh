@@ -56,7 +56,7 @@ export default function CookieBanner() {
           time. Read more in our{" "}
           <Link
             href="/terms"
-            className="text-hr-green underline-offset-2 hover:underline"
+            className="text-hr-red underline-offset-2 hover:underline"
           >
             Terms &amp; Conditions
           </Link>
@@ -66,14 +66,15 @@ export default function CookieBanner() {
         <div className="flex shrink-0 gap-2">
           <button
             onClick={() => respond("declined")}
-            className="rounded-md bg-white/10 px-5 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-white/20"
+            className="rounded-full border border-white/15 px-5 py-2 font-display text-[13px] font-medium text-white transition-colors hover:bg-white/10"
           >
             Decline
           </button>
           <button
             onClick={() => respond("accepted")}
-            className="rounded-md bg-hr-green px-5 py-2 font-display text-[13px] font-semibold text-black transition-colors hover:bg-hr-green-bright"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2 font-display text-[13px] font-semibold text-black transition-colors hover:bg-white/85"
           >
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-hr-red" />
             Accept
           </button>
         </div>

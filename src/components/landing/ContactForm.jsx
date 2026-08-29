@@ -16,7 +16,7 @@ const budgets = [
 const MESSAGE_LIMIT = 5000;
 
 const fieldClass =
-  "w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 font-body text-[14.5px] text-neutral-900 placeholder:text-neutral-400 outline-none transition-[border-color,box-shadow,background-color] focus:border-[#22c55e] focus:bg-white focus:ring-4 focus:ring-[#22c55e]/12";
+  "w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3.5 font-body text-[14.5px] text-neutral-900 placeholder:text-neutral-400 outline-none transition-[border-color,box-shadow,background-color] focus:border-[#e23a2e] focus:bg-white focus:ring-4 focus:ring-[#e23a2e]/12";
 
 const labelClass =
   "mb-2 block font-body text-[13px] font-medium text-neutral-700";
@@ -24,7 +24,7 @@ const labelClass =
 /** Marks a required field, with the asterisk hidden from screen readers. */
 function Required() {
   return (
-    <span aria-hidden="true" className="text-[#22c55e]">
+    <span aria-hidden="true" className="text-[#e23a2e]">
       *
     </span>
   );
@@ -53,7 +53,7 @@ function Arrow({ className = "" }) {
 function Sent({ onReset }) {
   return (
     <div className="py-6 text-center">
-      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#22c55e]/12 text-[#22c55e]">
+      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#e23a2e]/12 text-[#e23a2e]">
         <svg
           width="26"
           height="26"
@@ -82,8 +82,9 @@ function Sent({ onReset }) {
           href={contact.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-xl bg-neutral-900 px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-[#22c55e]"
+          className="inline-flex items-center gap-2.5 rounded-full bg-neutral-900 px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-neutral-700"
         >
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-hr-red" />
           Message on WhatsApp instead
         </a>
         <button
@@ -243,7 +244,7 @@ export default function ContactForm() {
             aria-hidden="true"
             className={`font-body text-[12px] tabular-nums ${
               messageLength > MESSAGE_LIMIT - 200
-                ? "text-[#22c55e]"
+                ? "text-[#e23a2e]"
                 : "text-neutral-400"
             }`}
           >
@@ -266,8 +267,9 @@ export default function ContactForm() {
       <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-3">
         <button
           type="submit"
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-neutral-900 px-7 py-3.5 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#22c55e] sm:w-auto"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-neutral-900 px-7 py-3.5 text-[14.5px] font-semibold text-white transition-colors hover:bg-neutral-700 sm:w-auto"
         >
+          <span aria-hidden="true" className="mr-0.5 h-2 w-2 rounded-full bg-hr-red" />
           Send message
           <Arrow className="transition-transform duration-200 group-hover:translate-x-1" />
         </button>

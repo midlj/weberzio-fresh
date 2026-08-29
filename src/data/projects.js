@@ -6,7 +6,7 @@ export const projects = [
     category: "Investment Platform",
     year: "2026",
     description:
-      "Portfolio management system enabling investors to track performance while founders manage investor relationships.",
+      "A platform for investors to manage their portfolios and track performance. Founders can also manage their investors and track their investments.",
     stack: ["Node.js", "MongoDB", "Next.js", "TypeScript"],
     href: "http://www.theliv.co.uk/",
     domain: "theliv.co.uk",
@@ -17,7 +17,7 @@ export const projects = [
     category: "E-commerce Platform",
     year: "2025",
     description:
-      "Multi-vendor marketplace for Indian products, with full vendor and customer functionality.",
+      "A platform for Indian products to be sold online. A multi-vendor platform where vendors can sell their products and customers can buy them.",
     stack: ["Laravel", "MySQL", "Flutter", "Tailwind CSS"],
     href: "https://myindianstore.app/",
     domain: "myindianstore.app",
@@ -28,7 +28,7 @@ export const projects = [
     category: "Real Estate Platform",
     year: "2024",
     description:
-      "A platform for real estate agents to manage their properties and clients.",
+      "A platform for real estate agents to manage their properties and clients. A multi-agent platform where agents can list their properties and clients can contact them.",
     stack: ["Next.js", "Nest.js", "MongoDB", "Postgres"],
     href: "https://www.sereneabode.ca/",
     domain: "sereneabode.ca",

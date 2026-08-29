@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   if (!service) return {};
 
   return {
-    title: service.title,
+    title: `${service.title} Services`,
     description: service.tagline,
     alternates: { canonical: `/services/${service.slug}` },
     openGraph: { title: service.title, description: service.tagline },
@@ -67,7 +67,7 @@ export default async function ServicePage({ params }) {
                 key={item}
                 className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6"
               >
-                <span className="text-[12px] font-semibold text-[#22c55e]">
+                <span className="text-[12px] font-semibold text-[#e23a2e]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="mt-3 font-body text-[14.5px] leading-relaxed text-neutral-600">
@@ -95,9 +95,9 @@ export default async function ServicePage({ params }) {
               <Link
                 key={item.slug}
                 href={`/services/${item.slug}`}
-                className="group rounded-2xl border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-[#22c55e]/50 hover:bg-white"
+                className="group rounded-2xl border border-neutral-200 bg-neutral-50 p-6 transition-colors hover:border-[#e23a2e]/50 hover:bg-white"
               >
-                <span className="text-[12px] font-semibold text-[#22c55e]">
+                <span className="text-[12px] font-semibold text-[#e23a2e]">
                   {item.number}
                 </span>
                 <h3 className="mt-3 text-[16.5px] font-semibold leading-snug text-neutral-800">

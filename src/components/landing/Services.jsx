@@ -57,7 +57,7 @@ export function ServiceCards() {
             hangs outside each edge, so most of it rests on the card rather
             than floating off in the gutter.
           */}
-          <span className="absolute -left-4 -top-4 flex h-16 w-16 items-center justify-center rounded-[18px] bg-neutral-900 text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)] transition-colors duration-300 group-hover:bg-[#22c55e]">
+          <span className="absolute -left-4 -top-4 flex h-16 w-16 items-center justify-center rounded-[18px] bg-neutral-900 text-white shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)] transition-colors duration-300 group-hover:bg-[#e23a2e]">
             <ServiceIcon slug={service.slug} className="h-[26px] w-[26px]" />
           </span>
 
@@ -82,9 +82,9 @@ export function ServiceCards() {
             ))}
           </ul>
 
-          <span className="mt-7 flex items-center justify-between border-t border-neutral-100 pt-5 font-body text-[13.5px] font-medium text-neutral-400 transition-colors group-hover:text-[#22c55e]">
+          <span className="mt-7 flex items-center justify-between border-t border-neutral-100 pt-5 font-body text-[13.5px] font-medium text-neutral-400 transition-colors group-hover:text-[#e23a2e]">
             Explore service
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-all duration-300 group-hover:bg-[#22c55e] group-hover:text-white">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 text-neutral-500 transition-all duration-300 group-hover:bg-[#e23a2e] group-hover:text-white">
               <svg
                 width="14"
                 height="14"
@@ -114,7 +114,7 @@ export default function Services() {
     >
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
             Services
           </p>
           <h2 className="mt-4 text-[32px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">

@@ -5,9 +5,9 @@
 
 export const site = {
   name: "Weberzio",
-  tagline: "Web & Mobile Apps that scale with your business",
+  tagline: "AI Native Software Development Company in Kerala",
   description:
-    "Premium web and mobile app development team and best website development company in Kerala, helping startups and enterprises ship reliable products.",
+    "Weberzio is an AI native software development company in Kerala building web and mobile apps for startups and enterprises — Flutter apps, MERN stack platforms, ecommerce websites and cloud infrastructure built to scale.",
   url: "https://www.weberzio.in",
 };
 
@@ -29,10 +29,29 @@ export const companyFacts = [
 ];
 
 export const stats = [
-  { value: "10+", label: "Products shipped" },
-  { value: "1+", label: "Years engineering" },
-  { value: "99.9%", label: "Uptime targeted" },
-  { value: "24h", label: "Response time" },
+  {
+    value: "10+",
+    label: "Products shipped",
+    description:
+      "Web apps, SaaS platforms, and internal tools delivered to production.",
+  },
+  {
+    value: "1+",
+    label: "Years engineering",
+    description:
+      "Full-stack experience across startups, scale-ups, and enterprise teams.",
+  },
+  {
+    value: "99.9%",
+    label: "Uptime targeted",
+    description:
+      "Cloud infrastructure designed, monitored, and hardened for reliability.",
+  },
+  {
+    value: "24h",
+    label: "Response time",
+    description: "We reply to project inquiries within one business day.",
+  },
 ];
 
 /** Shared engagement model, repeated on every service detail page. */
@@ -42,27 +61,27 @@ export const process = [
     title: "Discovery",
     summary: "Understand the problem",
     detail:
-      "We ask questions until the business goal is clear, not just the feature list.",
+      "We start by asking questions. Business goals, user needs, constraints. Nothing gets built until the shape of the problem is clear.",
   },
   {
     step: "02",
     title: "Scope",
     summary: "Plan the smallest useful thing",
     detail:
-      "An explicit written plan with milestones and trade-offs before any code is written.",
+      "A written plan with milestones, deliverables, and explicit trade-offs. You always know what's coming next and why.",
   },
   {
     step: "03",
     title: "Build",
     summary: "Ship in short iterations",
     detail:
-      "Working software deployed to a staging URL every week, so progress is visible.",
+      "Working software every week, deployed to a staging URL. Feedback loops stay tight and course-corrections are cheap.",
   },
   {
     step: "04",
     title: "Launch",
     summary: "Roll out with confidence",
     detail:
-      "Monitoring, documentation and handover support so your team owns what we built.",
+      "Monitoring, docs, and handover if you need them. Go-lives are boring because everything was tested twice.",
   },
 ];

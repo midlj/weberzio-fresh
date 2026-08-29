@@ -41,14 +41,14 @@ export default function PageHeader({ eyebrow, title, intro, children }) {
       <div
         data-hero-glow
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[760px] max-w-[110vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#22c55e]/10 blur-[140px]"
+        className="pointer-events-none absolute left-1/2 top-0 h-[320px] w-[760px] max-w-[110vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e23a2e]/10 blur-[140px]"
       />
 
       <div className="relative mx-auto max-w-6xl">
         {eyebrow && (
           <p
             data-hero-copy
-            className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]"
+            className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]"
           >
             {eyebrow}
           </p>

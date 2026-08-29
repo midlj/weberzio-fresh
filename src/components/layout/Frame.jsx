@@ -11,11 +11,13 @@ import { useLayoutEffect, useRef, useState } from "react";
  */
 const DESKTOP = {
   gap: 18, // gutter on sides and bottom
-  radius: 22, // corner radius, convex and concave alike
+  radius: 22, // corner radius of the panel's outer corners
   tabH: 78, // depth of the black tab holding the logo
   tabW: 236, // where that tab ends
   notchH: 78, // depth of the black notch holding the nav
   notchW: 502, // width of that notch
+  slant: 44, // horizontal run of each diagonal side (~54° over the 60px drop)
+  slantR: 13, // rounding radius where a diagonal meets a flat edge
 };
 
 const MOBILE = {
@@ -25,48 +27,65 @@ const MOBILE = {
   tabW: 178,
   notchH: 0,
   notchW: 0,
+  slant: 36,
+  slantR: 11,
 };
 
 /**
  * Traces the outline of the white content panel as one closed path.
  *
  * Walking it clockwise from under the logo tab: right along the tab's
- * underside, up around the flat middle run, down into the nav notch, then
- * around the panel's three outer corners and back. `A` arcs with sweep 0 cut
- * the concave corners; sweep 1 rounds the convex ones.
+ * underside, up the tab's slanted side onto the flat middle run, down the
+ * notch's slanted side to its underside, then around the panel's three outer
+ * corners and back. The tab and notch sides are straight diagonals that flare
+ * outward toward the top, joined to the flat edges by small `A` arcs — sweep
+ * 0 at the concave joints, sweep 1 at the convex ones.
  */
 function panelPath(w, h, g) {
-  const { gap, radius: r, tabH, tabW, notchH, notchW } = g;
+  const { gap, radius: r, tabH, tabW, notchH, notchW, slant, slantR } = g;
   const right = w - gap;
   const bottom = h - gap;
   const hasNotch = notchW > 0;
 
-  // x where the notch's left edge meets the flat top run
-  const notchX = right - notchW;
+  /*
+   * The diagonals rise the full tab depth over `slant` px. Each joint with a
+   * flat edge is rounded by an arc of radius slantR; `t` is how far that arc's
+   * tangent points sit from the sharp corner, along both the flat edge and the
+   * diagonal. (tx, ty) is that same offset resolved along the diagonal.
+   */
+  const drop = tabH - gap;
+  const len = Math.hypot(slant, drop);
+  const t = slantR * Math.tan(Math.atan2(drop, slant) / 2);
+  const tx = (t * slant) / len;
+  const ty = (t * drop) / len;
 
   const parts = [
     // Start under the logo tab, at its bottom-left (flush with the panel's left edge).
     `M ${gap} ${tabH}`,
     // Along the tab's underside to where it curves away.
-    `H ${tabW - r}`,
-    // Concave: curve up out of the tab onto the flat run.
-    `A ${r} ${r} 0 0 0 ${tabW} ${tabH - r}`,
-    // Up the tab's right side to the panel's top edge.
-    `V ${gap + r}`,
+    `H ${tabW - t}`,
+    // Concave: round up onto the diagonal.
+    `A ${slantR} ${slantR} 0 0 0 ${tabW + tx} ${tabH - ty}`,
+    // Up the tab's slanted side; it leans outward, so the tab overhangs its underside.
+    `L ${tabW + slant - tx} ${gap + ty}`,
     // Convex: round onto the flat top.
-    `A ${r} ${r} 0 0 1 ${tabW + r} ${gap}`,
+    `A ${slantR} ${slantR} 0 0 1 ${tabW + slant + t} ${gap}`,
   ];
 
   if (hasNotch) {
+    // x where the notch's slanted side meets its underside; the measured
+    // notchW is the nav's left edge, and the diagonal leans away from it
+    // going up, so the nav stays inside the black at every height.
+    const notchX = right - notchW;
     parts.push(
       // Flat run across the top to the notch.
-      `H ${notchX - r}`,
-      // Convex: round down off the top edge.
-      `A ${r} ${r} 0 0 1 ${notchX} ${gap + r}`,
-      // Down the notch's left side.
-      `V ${notchH - r}`,
-      // Concave: curve right into the notch's underside.
-      `A ${r} ${r} 0 0 0 ${notchX + r} ${notchH}`,
+      `H ${notchX - slant - t}`,
+      // Convex: round down onto the diagonal.
+      `A ${slantR} ${slantR} 0 0 1 ${notchX - slant + tx} ${gap + ty}`,
+      // Down the notch's slanted side.
+      `L ${notchX - tx} ${notchH - ty}`,
+      // Concave: round right into the notch's underside.
+      `A ${slantR} ${slantR} 0 0 0 ${notchX + t} ${notchH}`,
       // Along the notch underside to the panel's right edge.
       `H ${right}`,
     );

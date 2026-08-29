@@ -16,7 +16,7 @@ function Item({ item, isOpen, onToggle }) {
           {item.question}
         </span>
         <span
-          className={`shrink-0 text-[#22c55e] transition-transform duration-300 ${
+          className={`shrink-0 text-[#e23a2e] transition-transform duration-300 ${
             isOpen ? "rotate-45" : ""
           }`}
           aria-hidden="true"
@@ -61,11 +61,11 @@ export default function Faq() {
     >
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
-          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#22c55e]">
+          <p className="font-body text-[13px] uppercase tracking-[0.18em] text-[#e23a2e]">
             FAQ
           </p>
           <h2 className="mt-4 text-[32px] font-semibold leading-tight tracking-tight text-neutral-800 sm:text-[46px]">
-            Questions, answered
+            Answers before you ask.
           </h2>
         </div>
 
