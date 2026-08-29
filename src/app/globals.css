@@ -120,3 +120,54 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* The process section's card stage: on short viewports the tallest card
+   exceeds the pinned panel, so scale it down rather than let it clip.
+   GSAP animates the cards inside the stage, never the stage itself. */
+@media (max-height: 767px) {
+  [data-stage] {
+    transform: scale(0.87);
+  }
+}
+
+@media (max-height: 660px) {
+  [data-stage] {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-height: 560px) {
+  [data-stage] {
+    transform: scale(0.68);
+  }
+}
+
+@media (max-height: 480px) {
+  [data-stage] {
+    transform: scale(0.55);
+  }
+}
+
+/* Short viewports (landscape phones, half-snapped windows): the pinned panel
+   is only ~350-550px tall, so reclaim the heading's height for the stage
+   content — otherwise the statement column is clipped to a sliver below lg,
+   and the cards collide with the heading above it. */
+@media (max-height: 660px) {
+  #changing [data-heading] > span {
+    display: none;
+  }
+
+  #changing [data-heading] h2 {
+    margin-top: 0;
+    font-size: 22px;
+  }
+
+  #changing [data-panel] {
+    padding-top: calc(var(--frame-top) - var(--frame-gap) + 1rem);
+    padding-bottom: 20px;
+  }
+
+  #changing [data-panel] > .grid {
+    margin-top: 12px;
+  }
+}

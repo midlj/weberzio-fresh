@@ -9,41 +9,162 @@ gsap.registerPlugin(ScrollTrigger);
 const STAGES = [
   {
     id: "discovery",
+    label: "Discovery",
     lead: "Discovery",
     rest: " comes before code.",
     body: "We ask questions until the business goal is clear, not just the feature list.",
   },
   {
     id: "design",
+    label: "Design",
     lead: "Design",
     rest: " turns intent into structure.",
     body: "Architecture decisions and system design happen upfront — not as an afterthought halfway through a sprint.",
   },
   {
     id: "scope",
+    label: "Scope",
     lead: "Scope",
     rest: " is written down, in the open.",
     body: "An explicit plan with milestones and trade-offs — no surprises, no scope creep, and no invoices you haven't seen coming.",
   },
   {
     id: "launch",
+    label: "Shipping",
     lead: "Shipping",
     rest: " happens every single week.",
     body: "Working software on a staging URL you can click, then monitoring, documentation and handover so your team owns what we built.",
   },
   {
     id: "handoff",
+    label: "Handoff",
     lead: "Handoff",
     rest: " means your team owns it.",
     body: "We leave behind clean code, thorough docs, and a team that knows every line — so you're never stuck calling us at 2 a.m.",
   },
 ];
 
+const ACCENTS = {
+  discovery: "#39e08a",
+  design: "#e0a33c",
+  scope: "#8b93f8",
+  board: "#39e08a",
+};
+
 /* ------------------------------------------------------------------ */
-/*  Visual cards — one per early stage                                 */
+/*  Card chrome — shared shell so every stage card reads as one system */
 /* ------------------------------------------------------------------ */
 
-/** Discovery: research notes, interview questions, user insights. */
+/**
+ * Shell for every stage card: same width, radius, header rhythm and
+ * ambient glow, so swapping between stages reads as one object changing
+ * its contents rather than four unrelated panels dissolving.
+ */
+function CardShell({ accent, glyph, title, subtitle, children, footer }) {
+  return (
+    <div className="relative w-[300px] sm:w-[358px]">
+      {/* Ambient wash tinted to the stage accent. */}
+      <div
+        aria-hidden="true"
+        className="absolute -inset-6 rounded-[32px] opacity-45 blur-2xl"
+        style={{
+          background: `radial-gradient(60% 60% at 50% 40%, ${accent}40, transparent 70%)`,
+        }}
+      />
+
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.09] bg-[#0d1117]/95 shadow-[0_28px_70px_-24px_rgba(0,0,0,0.85)] backdrop-blur-sm">
+        {/* Hairline of stage colour along the top edge. */}
+        <div
+          aria-hidden="true"
+          className="h-px w-full"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${accent}, transparent)`,
+          }}
+        />
+
+        <div className="p-5">
+          <div className="flex items-center gap-3.5">
+            <div
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border"
+              style={{
+                borderColor: `${accent}38`,
+                background: `linear-gradient(145deg, ${accent}26, transparent)`,
+                color: accent,
+              }}
+            >
+              {glyph}
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-[15px] font-semibold text-white">
+                {title}
+              </p>
+              <p className="truncate text-[12px] text-white/45">{subtitle}</p>
+            </div>
+          </div>
+
+          <div className="mt-4 border-t border-white/[0.08] pt-4">{children}</div>
+
+          {footer ? (
+            <div className="mt-4 border-t border-white/[0.08] pt-4">{footer}</div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Line glyphs instead of emoji, which render inconsistently across
+   platforms and sit awkwardly against the type. */
+
+function IconSearch() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" aria-hidden="true">
+      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M16 16l4.5 4.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconLayers() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" aria-hidden="true">
+      <path
+        d="M12 3l8.5 4.5L12 12 3.5 7.5 12 3z"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 12.5l8 4.2 8-4.2M4 16.8l8 4.2 8-4.2"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconRoute() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" aria-hidden="true">
+      <circle cx="6" cy="6" r="2.6" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="18" cy="18" r="2.6" stroke="currentColor" strokeWidth="1.6" />
+      <path
+        d="M8.6 6H14a3.4 3.4 0 010 6.8h-4A3.4 3.4 0 006.6 16v-.4"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Stage cards                                                        */
+/* ------------------------------------------------------------------ */
+
+/** Discovery: the questions asked before any code is written. */
 function DiscoveryCard() {
   const questions = [
     { q: "Who is the primary user?", a: "Fund managers & retail investors" },
@@ -52,103 +173,107 @@ function DiscoveryCard() {
   ];
 
   return (
-    <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
-      <div className="flex items-center gap-3.5">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#6b8a6b] to-[#2d4a2d]">
-          <span className="text-[18px]">🔍</span>
-        </div>
-        <div>
-          <p className="text-[16px] font-semibold text-white">Discovery Brief</p>
-          <p className="text-[12.5px] text-white/55">Interview Notes</p>
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-white/10 pt-4 space-y-3">
+    <CardShell
+      accent={ACCENTS.discovery}
+      glyph={<IconSearch />}
+      title="Discovery Brief"
+      subtitle="Interview notes"
+      footer={
+        <>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-white/45">Questions answered</span>
+            <span className="text-[11px] font-medium text-white/70">3 of 8</span>
+          </div>
+          <div className="mt-2 h-[3px] w-full overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full"
+              style={{ width: "37%", background: ACCENTS.discovery }}
+            />
+          </div>
+        </>
+      }
+    >
+      <div className="space-y-2.5">
         {questions.map((item) => (
-          <div key={item.q} className="rounded-lg border border-white/10 bg-black/40 p-3">
-            <p className="text-[11px] font-semibold text-hr-green">{item.q}</p>
-            <p className="mt-1.5 text-[12px] leading-relaxed text-white/70">{item.a}</p>
+          <div
+            key={item.q}
+            data-card-row
+            className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-3"
+          >
+            <p className="text-[11px] font-semibold" style={{ color: ACCENTS.discovery }}>
+              {item.q}
+            </p>
+            <p className="mt-1.5 text-[12px] leading-relaxed text-white/65">{item.a}</p>
           </div>
         ))}
       </div>
-
-      <div className="mt-4 border-t border-white/10 pt-4">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-hr-green" />
-          <span className="text-[11px] text-white/50">3 of 8 questions answered</span>
-        </div>
-        <div className="mt-2 h-[3px] w-full rounded-full bg-white/10">
-          <div className="h-full w-[37%] rounded-full bg-hr-green" />
-        </div>
-      </div>
-    </div>
+    </CardShell>
   );
 }
 
-/** Design: architecture diagram with components and connections. */
+/** Design: the architecture agreed before the first sprint. */
 function DesignCard() {
   const layers = [
     { label: "Client", items: ["Next.js SSR", "React SPA"] },
     { label: "API", items: ["GraphQL", "REST"] },
     { label: "Data", items: ["PostgreSQL", "Redis"] },
   ];
+  const stats = [
+    ["4", "Services"],
+    ["12", "Endpoints"],
+    ["2", "Databases"],
+  ];
 
   return (
-    <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
-      <div className="flex items-center gap-3.5">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#8b6b4a] to-[#3d2d1a]">
-          <span className="text-[18px]">🏗️</span>
-        </div>
-        <div>
-          <p className="text-[16px] font-semibold text-white">System Design</p>
-          <p className="text-[12.5px] text-white/55">Architecture Overview</p>
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-white/10 pt-4">
-        <div className="space-y-3">
-          {layers.map((layer, i) => (
-            <div key={layer.label}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-semibold text-[#e0a33c]">{layer.label}</span>
-                {i < layers.length - 1 && (
-                  <span className="text-white/20" aria-hidden="true">↓</span>
-                )}
-              </div>
-              <div className="flex gap-2">
-                {layer.items.map((item) => (
-                  <div
-                    key={item}
-                    className="flex-1 rounded-lg border border-white/10 bg-black/40 p-2.5 text-center"
-                  >
-                    <span className="text-[11px] text-white/75">{item}</span>
-                  </div>
-                ))}
-              </div>
+    <CardShell
+      accent={ACCENTS.design}
+      glyph={<IconLayers />}
+      title="System Design"
+      subtitle="Architecture overview"
+      footer={
+        <div className="flex justify-between">
+          {stats.map(([value, label]) => (
+            <div key={label} className="text-center">
+              <p className="text-[17px] font-bold text-white">{value}</p>
+              <p className="text-[10px] text-white/40">{label}</p>
             </div>
           ))}
         </div>
+      }
+    >
+      <div className="space-y-2.5">
+        {layers.map((layer, i) => (
+          <div key={layer.label} data-card-row>
+            <div className="mb-1.5 flex items-center gap-2">
+              <span
+                className="text-[10px] font-semibold uppercase tracking-wider"
+                style={{ color: ACCENTS.design }}
+              >
+                {layer.label}
+              </span>
+              <span className="h-px flex-1 bg-white/[0.08]" />
+            </div>
+            <div className="flex gap-2">
+              {layer.items.map((item) => (
+                <div
+                  key={item}
+                  className="flex-1 rounded-lg border border-white/[0.07] bg-white/[0.03] p-2.5 text-center"
+                >
+                  <span className="text-[11px] text-white/70">{item}</span>
+                </div>
+              ))}
+            </div>
+            {i < layers.length - 1 && (
+              <div aria-hidden="true" className="mx-auto mt-1.5 h-2 w-px bg-white/[0.12]" />
+            )}
+          </div>
+        ))}
       </div>
-
-      <div className="mt-4 border-t border-white/10 pt-4 flex justify-between">
-        <div className="text-center">
-          <p className="text-[18px] font-bold text-white">4</p>
-          <p className="text-[10px] text-white/40">Services</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[18px] font-bold text-white">12</p>
-          <p className="text-[10px] text-white/40">Endpoints</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[18px] font-bold text-white">2</p>
-          <p className="text-[10px] text-white/40">Databases</p>
-        </div>
-      </div>
-    </div>
+    </CardShell>
   );
 }
 
-/** Scope: milestones timeline with progress indicators. */
+/** Scope: milestones and budget, written down in the open. */
 function ScopeCard() {
   const milestones = [
     { title: "Discovery & Scope", status: "done", week: "Week 1" },
@@ -158,55 +283,69 @@ function ScopeCard() {
   ];
 
   return (
-    <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
-      <div className="flex items-center gap-3.5">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#6b6b8a] to-[#2d2d4a]">
-          <span className="text-[18px]">📋</span>
+    <CardShell
+      accent={ACCENTS.scope}
+      glyph={<IconRoute />}
+      title="Project Scope"
+      subtitle="Milestones & timeline"
+      footer={
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[11px] text-white/45">Total estimated</p>
+            <p className="text-[15px] font-semibold text-white">6 weeks</p>
+          </div>
+          <div className="rounded-lg border border-white/[0.07] bg-white/[0.04] px-3 py-1.5 text-right">
+            <p className="text-[10px] text-white/45">Budget</p>
+            <p className="text-[13px] font-semibold" style={{ color: ACCENTS.scope }}>
+              $48k
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="text-[16px] font-semibold text-white">Project Scope</p>
-          <p className="text-[12.5px] text-white/55">Milestones & Timeline</p>
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-white/10 pt-4">
-        <div className="space-y-0">
-          {milestones.map((m, i) => (
-            <div key={m.title} className="flex gap-3">
+      }
+    >
+      <div>
+        {milestones.map((m, i) => {
+          const done = m.status === "done";
+          const active = m.status === "active";
+          return (
+            <div key={m.title} data-card-row className="flex gap-3">
               <div className="flex flex-col items-center">
                 <span
-                  className={`h-3 w-3 rounded-full ${
-                    m.status === "done"
-                      ? "bg-hr-green"
-                      : m.status === "active"
-                        ? "bg-[#e0a33c]"
-                        : "bg-white/20"
-                  }`}
-                />
+                  className="relative flex h-3 w-3 items-center justify-center rounded-full"
+                  style={{
+                    background: done
+                      ? ACCENTS.discovery
+                      : active
+                        ? ACCENTS.scope
+                        : "rgba(255,255,255,0.18)",
+                  }}
+                >
+                  {active && (
+                    <span
+                      className="absolute h-3 w-3 animate-ping rounded-full opacity-60"
+                      style={{ background: ACCENTS.scope }}
+                    />
+                  )}
+                </span>
                 {i < milestones.length - 1 && (
-                  <div className="w-px flex-1 bg-white/15" />
+                  <div className="w-px flex-1 bg-white/[0.12]" />
                 )}
               </div>
-              <div className="pb-4">
-                <p className="text-[13px] font-medium text-white">{m.title}</p>
-                <p className="mt-0.5 text-[10.5px] text-white/40">{m.week}</p>
+              <div className="pb-3.5">
+                <p
+                  className={`text-[12.5px] font-medium ${
+                    m.status === "upcoming" ? "text-white/45" : "text-white"
+                  }`}
+                >
+                  {m.title}
+                </p>
+                <p className="mt-0.5 text-[10.5px] text-white/35">{m.week}</p>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
-
-      <div className="border-t border-white/10 pt-4 flex items-center justify-between">
-        <div>
-          <p className="text-[12.5px] text-white/50">Total estimated</p>
-          <p className="text-[15px] font-semibold text-white">6 weeks</p>
-        </div>
-        <div className="rounded-lg bg-white/10 px-3 py-2">
-          <p className="text-[11px] text-white/50">Budget</p>
-          <p className="text-[13px] font-semibold text-hr-green">$48k</p>
-        </div>
-      </div>
-    </div>
+    </CardShell>
   );
 }
 
@@ -215,19 +354,30 @@ function ScopeCard() {
 /* ------------------------------------------------------------------ */
 
 /** Kanban task card reused by the delivery board. */
-function TaskCard({ title, owner, dates, dim = false }) {
+function TaskCard({ title, owner, dates, dim = false, shipped = false }) {
   return (
-    <div className={`rounded-lg bg-[#1b2432] p-3.5 ${dim ? "opacity-45" : ""}`}>
-      <p className="text-[13px] leading-snug text-white">{title}</p>
-      <div className="mt-2.5 flex items-center gap-2">
-        <span className="inline-flex items-center gap-1 rounded bg-white/10 px-1.5 py-1 text-[10px] text-white/85">
-          <span className="text-hr-green">✦</span> Staging
+    <div
+      className={`rounded-xl border border-white/[0.07] bg-white/[0.04] p-3 ${
+        dim ? "opacity-40" : ""
+      }`}
+    >
+      <p className="text-[12.5px] leading-snug text-white">{title}</p>
+      <div className="mt-2.5 flex items-center gap-1.5">
+        <span
+          className="inline-flex items-center rounded-md px-1.5 py-1 text-[10px]"
+          style={{
+            background: shipped ? `${ACCENTS.discovery}1f` : "rgba(255,255,255,0.07)",
+            color: shipped ? ACCENTS.discovery : "rgba(255,255,255,0.7)",
+          }}
+        >
+          {shipped ? "Shipped" : "Staging"}
         </span>
-        <span className="inline-flex items-center gap-1 rounded bg-white/10 px-1.5 py-1 text-[10px] text-white/85">
-          <span className="h-3 w-3 rounded-full bg-[#e0a33c]" /> {owner}
+        <span className="inline-flex items-center gap-1 rounded-md bg-white/[0.07] px-1.5 py-1 text-[10px] text-white/70">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#e0a33c]" />
+          {owner}
         </span>
+        <span className="ml-auto text-[10px] text-white/35">{dates}</span>
       </div>
-      <p className="mt-2.5 text-[10px] text-white/45">{dates}</p>
     </div>
   );
 }
@@ -235,78 +385,73 @@ function TaskCard({ title, owner, dates, dim = false }) {
 /** Backlog → Shipped board — shown in the final stages. */
 function DelegationBoard() {
   return (
-    <div className="relative w-[300px] sm:w-[420px]">
+    <div className="relative w-[300px] sm:w-[358px]">
       <div
-        data-board="backlog"
-        className="w-[240px] rounded-xl bg-[#141c28] p-3.5 shadow-2xl sm:w-[290px]"
-      >
-        <div className="mb-3 flex items-center justify-between px-1">
-          <p className="text-[12.5px] text-white/80">Backlog</p>
-          <span className="text-white/45" aria-hidden="true">···</span>
-        </div>
-        <TaskCard
-          title="Payment gateway and checkout flow"
-          owner="Weberzio"
-          dates="Sprint 3"
-          dim
-        />
-      </div>
+        aria-hidden="true"
+        className="absolute -inset-6 rounded-[32px] opacity-40 blur-2xl"
+        style={{
+          background: `radial-gradient(60% 60% at 50% 40%, ${ACCENTS.board}38, transparent 70%)`,
+        }}
+      />
 
-      <div
-        data-board="delegated"
-        className="relative -mt-6 ml-auto w-[250px] rounded-xl bg-[#141c28] p-3.5 shadow-2xl sm:w-[300px]"
-      >
-        <div className="mb-3 flex items-center justify-between px-1">
-          <p className="text-[12.5px] text-white/80">Shipped</p>
-          <span className="text-white/45" aria-hidden="true">···</span>
-        </div>
-        <div className="space-y-2.5">
+      <div className="relative space-y-3">
+        <div
+          data-board="backlog"
+          className="rounded-2xl border border-white/[0.09] bg-[#0d1117]/95 p-3.5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8)]"
+        >
+          <div className="mb-2.5 flex items-center justify-between px-0.5">
+            <p className="text-[12px] font-medium text-white/70">Backlog</p>
+            <span className="text-[11px] text-white/35">1</span>
+          </div>
           <TaskCard
             title="Payment gateway and checkout flow"
             owner="Weberzio"
             dates="Sprint 3"
-          />
-          <TaskCard
-            title="Multi-tenant access control"
-            owner="Weberzio"
-            dates="Sprint 2"
             dim
           />
         </div>
-      </div>
 
-      <div data-board="arrow" className="absolute -left-4 bottom-4 sm:-left-10">
-        <p className="-rotate-12 text-[15px] italic text-white/85">
-          Shipped weekly
-        </p>
-        <svg viewBox="0 0 90 24" className="mt-1 w-24" fill="none" aria-hidden="true">
-          <path
-            data-arrow-path
-            d="M2 4c22 22 62 20 84 12"
-            stroke="var(--color-hr-green)"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-          />
-          <path
-            data-arrow-head
-            d="M78 12l8 4-6 5"
-            stroke="var(--color-hr-green)"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-          />
-        </svg>
+        {/* Motion cue between the two columns. */}
+        <div data-board="arrow" className="flex items-center gap-2 px-1">
+          <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" aria-hidden="true">
+            <path
+              d="M12 4v16m0 0l-5-5m5 5l5-5"
+              stroke={ACCENTS.board}
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="text-[11.5px] italic text-white/55">Shipped weekly</span>
+          <span className="h-px flex-1 bg-white/[0.08]" />
+        </div>
+
+        <div
+          data-board="delegated"
+          className="rounded-2xl border border-white/[0.09] bg-[#0d1117]/95 p-3.5 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8)]"
+        >
+          <div className="mb-2.5 flex items-center justify-between px-0.5">
+            <p className="text-[12px] font-medium text-white/70">Shipped</p>
+            <span className="text-[11px] text-white/35">2</span>
+          </div>
+          <div className="space-y-2.5">
+            <TaskCard
+              title="Payment gateway and checkout flow"
+              owner="Weberzio"
+              dates="Sprint 3"
+              shipped
+            />
+            <TaskCard
+              title="Multi-tenant access control"
+              owner="Weberzio"
+              dates="Sprint 2"
+              shipped
+              dim
+            />
+          </div>
+        </div>
       </div>
     </div>
-  );
-}
-
-/** Photo stand-in that sits behind the floating cards. */
-function PhotoPlate({ className = "" }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`rounded-2xl bg-gradient-to-br from-[#c8c3ba] via-[#9aa3a8] to-[#5d6a72] ${className}`}
-    />
   );
 }
 
@@ -323,26 +468,69 @@ export default function ChangingDev() {
       const panel = self.selector("[data-panel]")[0];
       const statements = self.selector("[data-statement]");
       const bodies = self.selector("[data-body]");
+      const labels = self.selector("[data-rail-label]");
+      const track = self.selector("[data-track]")[0];
+      const rails = self.selector("[data-rail-fill]");
+      const ticks = self.selector("[data-tick]");
+      const discovery = self.selector("[data-visual='discovery']");
+      const design = self.selector("[data-visual='design']");
+      const scope = self.selector("[data-visual='scope']");
+      const board = self.selector("[data-visual='board']");
 
       // Reduced motion: land on the final state without pinning the viewport.
       if (reduced) {
         gsap.set(panel, { backgroundColor: "#000000" });
-        gsap.set(statements, { opacity: 1 });
-        gsap.set(bodies, { opacity: 1, y: 0 });
+        gsap.set(statements, { opacity: 1, color: "#ffffff" });
+        gsap.set(bodies, { opacity: 1, y: 0, color: "rgba(255,255,255,0.55)" });
+        gsap.set(labels, { color: "rgba(255,255,255,0.5)" });
+        gsap.set(rails, { scaleY: 1 });
+        gsap.set(ticks, { opacity: 1 });
         gsap.set(self.selector("[data-heading]"), { opacity: 0 });
-        gsap.set(self.selector("[data-visual='discovery']"), { display: "none" });
-        gsap.set(self.selector("[data-visual='design']"), { display: "none" });
-        gsap.set(self.selector("[data-visual='scope']"), { display: "none" });
-        gsap.set(self.selector("[data-visual='board']"), { opacity: 1, display: "flex" });
+        gsap.set([discovery, design, scope], { display: "none" });
+        gsap.set(board, { opacity: 1, display: "flex" });
+        // Every statement is legible at once here, and the stack is taller than
+        // the panel — so let the column scroll rather than clipping the last two.
+        const scroller = track?.parentElement;
+        if (scroller) {
+          scroller.style.overflowY = "auto";
+          // Safari does not make overflow scrollers keyboard-focusable by
+          // default, and this one has no focusable children — without a
+          // tabindex a keyboard user could never reach the last stages.
+          scroller.tabIndex = 0;
+          scroller.setAttribute("role", "region");
+          scroller.setAttribute("aria-label", "How we build software — process stages");
+        }
         return;
       }
 
-      // Statements start dim; each one lights up as its stage arrives.
-      gsap.set(statements, { opacity: 0.22 });
+      /**
+       * Offset that centres stage `index` inside the visible column. Measured
+       * lazily at tween time so it stays correct after a resize, and clamped so
+       * the track never pulls past its own ends.
+       */
+      const trackOffset = (index) => {
+        const viewport = track?.parentElement;
+        const stage = statements[index]?.closest("div");
+        if (!track || !viewport || !stage) return 0;
+        const raw =
+          stage.offsetTop + stage.offsetHeight / 2 - viewport.clientHeight / 2;
+        const max = Math.max(0, track.scrollHeight - viewport.clientHeight);
+        return -Math.min(Math.max(raw, 0), max);
+      };
+
+      // Statement states: upcoming -> active -> completed. Stages activate
+      // one by one and accumulate — a completed stage stays half-lit instead
+      // of receding to near-invisible, so the column reads as a checklist
+      // filling in rather than a single roving highlight.
+      const DIM_UPCOMING = 0.16;
+      const DIM_DONE = 0.5;
+      gsap.set(statements, { opacity: DIM_UPCOMING });
       gsap.set(bodies, { opacity: 0, y: 8 });
-      gsap.set(self.selector("[data-visual='design']"), { opacity: 0 });
-      gsap.set(self.selector("[data-visual='scope']"), { opacity: 0 });
-      gsap.set(self.selector("[data-visual='board']"), { opacity: 0 });
+      gsap.set(ticks, { opacity: 0.25, scale: 0.75 });
+      gsap.set(rails, { scaleY: 0, transformOrigin: "top center" });
+      gsap.set([design, scope, board], { opacity: 0 });
+      // Stage 0 starts already centred, so later stages only ever slide upward.
+      gsap.set(track, { y: () => trackOffset(0) });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -350,91 +538,137 @@ export default function ChangingDev() {
           start: "top top",
           end: "bottom bottom",
           scrub: 0.6,
+          // Re-evaluate function-based values (trackOffset) after a resize,
+          // so the active statement re-centres against the new panel height.
+          invalidateOnRefresh: true,
         },
         defaults: { ease: "none" },
       });
+
+      /**
+       * Swap one stage card for the next. The outgoing card lifts and
+       * shrinks while the incoming one rises into the same spot, so the
+       * two read as a single object being replaced rather than two
+       * panels dissolving over each other.
+       */
+      const swapVisual = (from, to, at) => {
+        timeline
+          .to(from, { opacity: 0, y: -26, scale: 0.96, duration: 0.4 }, at)
+          .set(from, { display: "none" }, at + 0.4)
+          .set(to, { display: "block" }, at + 0.4)
+          .fromTo(
+            to,
+            { opacity: 0, y: 34, scale: 0.96 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power2.out" },
+            at + 0.4
+          )
+          .from(
+            to[0].querySelectorAll("[data-card-row]"),
+            { opacity: 0, y: 12, stagger: 0.05, duration: 0.35, ease: "power2.out" },
+            at + 0.55
+          );
+      };
+
+      /** Light the active step on the rail and fill the segment below it. */
+      const advanceRail = (index, at) => {
+        if (ticks[index]) {
+          timeline.to(
+            ticks[index],
+            { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" },
+            at
+          );
+        }
+        if (rails[index]) {
+          timeline.to(rails[index], { scaleY: 1, duration: 0.55 }, at);
+        }
+      };
+
+      /** Bring a statement forward; dim whichever one preceded it. */
+      const focusStatement = (index, at) => {
+        if (index > 0) {
+          timeline
+            .to(statements[index - 1], { opacity: DIM_DONE, duration: 0.35 }, at - 0.1)
+            .to(bodies[index - 1], { opacity: 0, y: -8, duration: 0.3 }, at - 0.1);
+        }
+        timeline
+          .to(statements[index], { opacity: 1, duration: 0.35 }, at)
+          .to(bodies[index], { opacity: 1, y: 0, duration: 0.35 }, at + 0.05)
+          .to(
+            track,
+            { y: () => trackOffset(index), duration: 0.5, ease: "power2.inOut" },
+            at - 0.05
+          );
+        advanceRail(index, at);
+      };
 
       // --- Stage 0: Discovery -------------------------------------------------
       timeline
         .to(statements[0], { opacity: 1, duration: 0.4 }, 0)
         .to(bodies[0], { opacity: 1, y: 0, duration: 0.4 }, 0)
         .from(
-          self.selector("[data-visual='discovery']"),
-          { opacity: 0, y: 40, duration: 0.6 },
+          discovery,
+          { opacity: 0, y: 44, scale: 0.96, duration: 0.6, ease: "power2.out" },
           0
         )
         .from(
-          self.selector("[data-visual='discovery'] [data-badge]"),
-          { opacity: 0, scale: 0.6, stagger: 0.08, duration: 0.4 },
+          self.selector("[data-visual='discovery'] [data-card-row]"),
+          { opacity: 0, y: 14, stagger: 0.07, duration: 0.4, ease: "power2.out" },
           0.2
         );
+      advanceRail(0, 0.1);
 
-      // --- Stage 0 → 1: Design — cross-fade visuals --------------------------
-      timeline
-        .to(statements[0], { opacity: 0.22, duration: 0.35 }, 0.8)
-        .to(bodies[0], { opacity: 0, y: -8, duration: 0.3 }, 0.8)
-        .to(self.selector("[data-visual='discovery']"), { opacity: 0, duration: 0.4 }, 0.8)
-        .set(self.selector("[data-visual='discovery']"), { display: "none" }, 1.2)
-        .set(self.selector("[data-visual='design']"), { display: "block" }, 1.2)
-        .to(self.selector("[data-visual='design']"), { opacity: 1, duration: 0.4 }, 1.2)
-        .to(statements[1], { opacity: 1, duration: 0.35 }, 0.9)
-        .to(bodies[1], { opacity: 1, y: 0, duration: 0.35 }, 0.95);
+      // --- Stage 0 → 1: Design ------------------------------------------------
+      swapVisual(discovery, design, 0.85);
+      focusStatement(1, 0.95);
 
-      // --- Stage 1 → 2: Scope — cross-fade visuals ---------------------------
-      timeline
-        .to(statements[1], { opacity: 0.22, duration: 0.35 }, 1.6)
-        .to(bodies[1], { opacity: 0, y: -8, duration: 0.3 }, 1.6)
-        .to(self.selector("[data-visual='design']"), { opacity: 0, duration: 0.4 }, 1.6)
-        .set(self.selector("[data-visual='design']"), { display: "none" }, 2.0)
-        .set(self.selector("[data-visual='scope']"), { display: "block" }, 2.0)
-        .to(self.selector("[data-visual='scope']"), { opacity: 1, duration: 0.4 }, 2.0)
-        .to(statements[2], { opacity: 1, duration: 0.35 }, 1.7)
-        .to(bodies[2], { opacity: 1, y: 0, duration: 0.35 }, 1.75);
+      // --- Stage 1 → 2: Scope -------------------------------------------------
+      // Swaps are spaced so a card's exit never starts until its entrance
+      // (including the row stagger) has fully finished — overlapping tweens on
+      // the same target capture mid-animation start values and make the card's
+      // peak brightness depend on scroll speed.
+      swapVisual(design, scope, 1.95);
+      focusStatement(2, 2.05);
 
       // --- Stage 2 → 3: Shipping — panel inverts to black ---------------------
       timeline
-        .to(statements[2], { opacity: 0.22, duration: 0.35 }, 2.4)
-        .to(bodies[2], { opacity: 0, y: -8, duration: 0.3 }, 2.4)
-        .to(self.selector("[data-heading]"), { opacity: 0, duration: 0.5 }, 2.3)
-        .to(panel, { backgroundColor: "#000000", duration: 0.7 }, 2.3)
-        .to(statements, { color: "#ffffff", duration: 0.7 }, 2.3)
-        .to(bodies, { color: "rgba(255,255,255,0.55)", duration: 0.7 }, 2.3)
+        .to(self.selector("[data-heading]"), { opacity: 0, y: -20, duration: 0.5 }, 3.1)
+        .to(panel, { backgroundColor: "#000000", duration: 0.7 }, 3.1)
+        .to(statements, { color: "#ffffff", duration: 0.7 }, 3.1)
+        .to(bodies, { color: "rgba(255,255,255,0.55)", duration: 0.7 }, 3.1)
+        .to(labels, { color: "rgba(255,255,255,0.5)", duration: 0.7 }, 3.1)
         .to(
-          self.selector("[data-visual='scope']"),
-          { opacity: 0, y: -60, duration: 0.5 },
-          2.3
-        )
-        .set(self.selector("[data-visual='scope']"), { display: "none" }, 2.8)
-        .set(self.selector("[data-visual='board']"), { display: "flex" }, 2.8)
-        .to(
-          self.selector("[data-visual='board']"),
-          { opacity: 1, duration: 0.4 },
-          2.8
-        )
-        .from(
-          self.selector("[data-board='backlog']"),
-          { opacity: 0, x: -40, duration: 0.5 },
-          2.85
-        )
-        .from(
-          self.selector("[data-board='delegated']"),
-          { opacity: 0, x: 40, y: 20, duration: 0.5 },
-          2.95
-        )
-        .from(
-          self.selector("[data-board='arrow']"),
-          { opacity: 0, scale: 0.8, duration: 0.4 },
+          self.selector("[data-rail-track]"),
+          { backgroundColor: "rgba(255,255,255,0.14)", duration: 0.7 },
           3.1
+        );
+
+      timeline
+        .to(scope, { opacity: 0, y: -40, scale: 0.96, duration: 0.5 }, 3.15)
+        .set(scope, { display: "none" }, 3.65)
+        .set(board, { display: "flex" }, 3.65)
+        .to(board, { opacity: 1, duration: 0.4 }, 3.65)
+        .fromTo(
+          self.selector("[data-board='backlog']"),
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+          3.7
         )
-        .to(statements[3], { opacity: 1, duration: 0.35 }, 2.7)
-        .to(bodies[3], { opacity: 1, y: 0, duration: 0.35 }, 2.75);
+        .fromTo(
+          self.selector("[data-board='arrow']"),
+          { opacity: 0, scaleX: 0.7 },
+          { opacity: 1, scaleX: 1, duration: 0.35, ease: "power2.out" },
+          3.85
+        )
+        .fromTo(
+          self.selector("[data-board='delegated']"),
+          { opacity: 0, y: 26 },
+          { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+          3.95
+        );
+      focusStatement(3, 3.55);
 
       // --- Stage 3 → 4: Handoff -----------------------------------------------
-      timeline
-        .to(statements[3], { opacity: 0.22, duration: 0.35 }, 3.6)
-        .to(bodies[3], { opacity: 0, y: -8, duration: 0.3 }, 3.6)
-        .to(statements[4], { opacity: 1, duration: 0.35 }, 3.7)
-        .to(bodies[4], { opacity: 1, y: 0, duration: 0.35 }, 3.75);
+      focusStatement(4, 4.5);
     }, root);
 
     return () => context.revert();
@@ -446,67 +680,128 @@ export default function ChangingDev() {
         data-panel
         className="sticky top-[var(--frame-gap)] flex h-[calc(100dvh-var(--frame-gap)*2)] flex-col overflow-hidden bg-white px-5 pb-12 pt-[calc(var(--frame-top)-var(--frame-gap)+2rem)] sm:px-8"
       >
-        <h2
-          data-heading
-          className="text-center text-[30px] font-semibold leading-tight tracking-tight sm:text-[42px]"
-        >
-          <span className="text-[#22c55e]">How We</span>
-          <br />
-          <span className="text-neutral-700">Build Software</span>
-        </h2>
+        <div data-heading className="text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 font-body text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#22c55e]" />
+            Our process
+          </span>
+          <h2 className="mt-4 text-[30px] font-semibold leading-tight tracking-tight sm:text-[42px]">
+            <span className="text-[#22c55e]">How We</span>
+            <br />
+            <span className="text-neutral-700">Build Software</span>
+          </h2>
+        </div>
 
-        <div className="mx-auto mt-10 grid w-full max-w-6xl flex-1 items-center gap-10 lg:grid-cols-2">
-          {/* Statement column — the active line is legible, the rest recede. */}
-          <div className="space-y-10 sm:space-y-14">
-            {STAGES.map((item) => (
-              <div key={item.id}>
-                <p
-                  data-statement
-                  className="text-[22px] font-semibold leading-snug tracking-tight text-neutral-800 sm:text-[28px]"
+        <div className="mx-auto mt-8 grid w-full min-h-0 max-w-6xl flex-1 grid-rows-1 items-stretch gap-10 lg:grid-cols-2">
+          {/* Statement column — a progress rail marks how far the story has run.
+              `min-h-0` lets this column stay inside the grid row instead of
+              inflating it; without it the stacked stages force the row far past
+              the panel and the visual column inherits that height. */}
+          {/* `self-stretch` + inset-0 bounds this viewport to the grid row; without
+              it the wrapper grows to the track's own height and there is nothing
+              to scroll the active stage into. */}
+          <div className="relative min-h-0 self-stretch">
+            <div className="absolute inset-0 overflow-hidden">
+            {/* Rail and statements share one translated track so the active stage
+                is always centred in view — the five stages together are taller
+                than the pinned panel, so a static column would bury the later
+                ones below the fold. */}
+            <div data-track className="flex gap-5 sm:gap-6">
+            <div
+              aria-hidden="true"
+              className="relative flex w-3 shrink-0 flex-col items-center pt-6"
+            >
+              {STAGES.map((item, i) => (
+                <div
+                  key={item.id}
+                  className={`flex w-full flex-col items-center ${
+                    i < STAGES.length - 1 ? "flex-1" : ""
+                  }`}
                 >
-                  <span className="text-[#22c55e]">{item.lead}</span>
-                  {item.rest}
-                </p>
-                <p
-                  data-body
-                  className="mt-3 max-w-sm font-body text-[14px] leading-relaxed text-neutral-500"
-                >
-                  {item.body}
-                </p>
-              </div>
-            ))}
+                  <span
+                    data-tick
+                    className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#22c55e]"
+                  />
+                  {i < STAGES.length - 1 && (
+                    <div
+                      data-rail-track
+                      className="relative my-1.5 w-px flex-1 bg-neutral-200"
+                    >
+                      <span
+                        data-rail-fill
+                        className="absolute inset-0 block bg-[#22c55e]"
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="flex-1 space-y-8 sm:space-y-11">
+              {STAGES.map((item, i) => (
+                <div key={item.id}>
+                  <p
+                    data-rail-label
+                    className="mb-1.5 font-body text-[10.5px] font-semibold uppercase tracking-[0.16em] text-neutral-400"
+                  >
+                    {String(i + 1).padStart(2, "0")} — {item.label}
+                  </p>
+                  <p
+                    data-statement
+                    className="text-[21px] font-semibold leading-snug tracking-tight text-neutral-800 sm:text-[27px]"
+                  >
+                    <span className="text-[#22c55e]">{item.lead}</span>
+                    {item.rest}
+                  </p>
+                  <p
+                    data-body
+                    className="mt-2.5 max-w-sm font-body text-[14px] leading-relaxed text-neutral-500"
+                  >
+                    {item.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+            </div>
+            </div>
           </div>
 
-          {/* Visual column — one card per early stage, then the board for shipping/handoff. */}
-          <div className="relative hidden min-h-[400px] items-center justify-center lg:flex">
-            {/* Stage 0: Discovery */}
-            <div data-visual="discovery" className="absolute">
-              <PhotoPlate className="h-[300px] w-[260px]" />
-              <div className="absolute -bottom-16 -right-24">
+          {/* Visual column — one card per stage, then the board for shipping/handoff.
+              The statement column runs taller than the panel, and a stretched grid
+              item would inherit that height and push the centred cards off-screen.
+              Pinning the stage with absolute inset-0 keeps it the size of the grid
+              row, so the cards centre against what is actually visible. */}
+          {/* `self-stretch` is required: a `hidden lg:block` grid item collapses to
+              zero height, leaving the absolutely-positioned stage below nothing to
+              resolve `inset-0` against — which drops the cards past the panel's
+              clipped bottom edge. Stretching pins it to the grid row instead. */}
+          <div className="relative hidden self-stretch lg:block">
+            {/* On short viewports the tallest card exceeds the row, so the stage
+                scales down proportionally rather than being clipped. The zoom var
+                is set in globals.css via a max-height media query; GSAP only ever
+                touches the cards inside, so the two transforms never collide. */}
+            <div
+              data-stage
+              className="absolute inset-0 flex origin-center items-center justify-center"
+            >
+              <div data-visual="discovery" className="absolute">
                 <DiscoveryCard />
               </div>
-            </div>
 
-            {/* Stage 1: Design */}
-            <div data-visual="design" className="absolute hidden">
-              <PhotoPlate className="h-[300px] w-[260px]" />
-              <div className="absolute -bottom-16 -right-24">
+              <div data-visual="design" className="absolute hidden">
                 <DesignCard />
               </div>
-            </div>
 
-            {/* Stage 2: Scope */}
-            <div data-visual="scope" className="absolute hidden">
-              <PhotoPlate className="h-[300px] w-[260px]" />
-              <div className="absolute -bottom-16 -right-24">
+              <div data-visual="scope" className="absolute hidden">
                 <ScopeCard />
               </div>
-            </div>
 
-            {/* Stages 3-4: Delivery board */}
-            <div data-visual="board" className="absolute hidden items-center gap-6">
-              <DelegationBoard />
-              <PhotoPlate className="hidden h-[320px] w-[240px] xl:block" />
+              <div
+                data-visual="board"
+                className="absolute hidden items-center justify-center"
+              >
+                <DelegationBoard />
+              </div>
             </div>
           </div>
         </div>
