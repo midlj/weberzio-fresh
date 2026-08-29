@@ -1,6 +1,7 @@
 import PageHeader from "@/components/landing/PageHeader";
 import ContactForm from "@/components/landing/ContactForm";
 import ContactIcon from "@/components/landing/ContactIcon";
+import CTA from "@/components/landing/CTA";
 import { contact } from "@/data/site";
 
 export const metadata = {
@@ -244,6 +245,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      <CTA />
     </>
   );
 }

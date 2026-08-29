@@ -18,7 +18,14 @@ const DESKTOP = {
   notchW: 502, // width of that notch
 };
 
-const MOBILE = { gap: 12, radius: 18, tabH: 62, tabW: 178, notchH: 0, notchW: 0 };
+const MOBILE = {
+  gap: 12,
+  radius: 18,
+  tabH: 62,
+  tabW: 178,
+  notchH: 0,
+  notchW: 0,
+};
 
 /**
  * Traces the outline of the white content panel as one closed path.
@@ -61,13 +68,13 @@ function panelPath(w, h, g) {
       // Concave: curve right into the notch's underside.
       `A ${r} ${r} 0 0 0 ${notchX + r} ${notchH}`,
       // Along the notch underside to the panel's right edge.
-      `H ${right}`
+      `H ${right}`,
     );
   } else {
     parts.push(
       // No notch: run the top edge straight to the right corner.
       `H ${right - r}`,
-      `A ${r} ${r} 0 0 1 ${right} ${gap + r}`
+      `A ${r} ${r} 0 0 1 ${right} ${gap + r}`,
     );
   }
 
@@ -77,7 +84,7 @@ function panelPath(w, h, g) {
     `A ${r} ${r} 0 0 1 ${right - r} ${bottom}`,
     `H ${gap + r}`,
     `A ${r} ${r} 0 0 1 ${gap} ${bottom - r}`,
-    `Z`
+    `Z`,
   );
 
   return parts.join(" ");
@@ -174,7 +181,10 @@ export default function Frame({ children }) {
        */}
       <div
         className="px-[var(--frame-gap)] pb-[var(--frame-gap)] pt-[var(--frame-gap)]"
-        style={{ "--frame-gap": `${geo.gap}px`, "--frame-top": `${geo.tabH}px` }}
+        style={{
+          "--frame-gap": `${geo.gap}px`,
+          "--frame-top": `${geo.tabH}px`,
+        }}
       >
         {children}
       </div>
@@ -206,19 +216,22 @@ export default function Frame({ children }) {
       )}
 
       {size && (
-        <svg
-          aria-hidden="true"
-          className="pointer-events-none fixed left-0 top-0 z-40"
-          style={{ width: size.w, height: size.h }}
-          viewBox={`0 0 ${size.w} ${size.h}`}
-          preserveAspectRatio="none"
-        >
-          <path
-            fill="#000"
-            fillRule="evenodd"
-            d={`M 0 0 H ${size.w} V ${size.h} H 0 Z ${panelPath(size.w, size.h, geo)}`}
-          />
-        </svg>
+        <>
+          <svg
+            aria-hidden="true"
+            className="pointer-events-none fixed left-0 top-0 z-40"
+            style={{ width: size.w, height: size.h }}
+            viewBox={`0 0 ${size.w} ${size.h}`}
+            preserveAspectRatio="none"
+          >
+            <path
+              fill="#000"
+              fillRule="evenodd"
+              d={`M 0 0 H ${size.w} V ${size.h} H 0 Z ${panelPath(size.w, size.h, geo)}`}
+            />
+          </svg>
+          
+        </>
       )}
     </div>
   );

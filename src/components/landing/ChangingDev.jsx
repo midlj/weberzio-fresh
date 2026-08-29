@@ -14,10 +14,16 @@ const STAGES = [
     body: "We ask questions until the business goal is clear, not just the feature list.",
   },
   {
+    id: "design",
+    lead: "Design",
+    rest: " turns intent into structure.",
+    body: "Architecture decisions and system design happen upfront — not as an afterthought halfway through a sprint.",
+  },
+  {
     id: "scope",
     lead: "Scope",
     rest: " is written down, in the open.",
-    body: "An explicit plan with milestones and trade-offs — no surprises, no scope creep, and no invoices you haven’t seen coming.",
+    body: "An explicit plan with milestones and trade-offs — no surprises, no scope creep, and no invoices you haven't seen coming.",
   },
   {
     id: "launch",
@@ -25,76 +31,188 @@ const STAGES = [
     rest: " happens every single week.",
     body: "Working software on a staging URL you can click, then monitoring, documentation and handover so your team owns what we built.",
   },
+  {
+    id: "handoff",
+    lead: "Handoff",
+    rest: " means your team owns it.",
+    body: "We leave behind clean code, thorough docs, and a team that knows every line — so you're never stuck calling us at 2 a.m.",
+  },
 ];
 
-/** Project brief card with deliverables and stack — shown in the first stages. */
-function ProfileCard() {
+/* ------------------------------------------------------------------ */
+/*  Visual cards — one per early stage                                 */
+/* ------------------------------------------------------------------ */
+
+/** Discovery: research notes, interview questions, user insights. */
+function DiscoveryCard() {
+  const questions = [
+    { q: "Who is the primary user?", a: "Fund managers & retail investors" },
+    { q: "What problem are we solving?", a: "Real-time portfolio visibility" },
+    { q: "What does success look like?", a: "Daily active users + AUM growth" },
+  ];
+
   return (
     <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
       <div className="flex items-center gap-3.5">
-        <div className="h-12 w-12 shrink-0 rounded-full bg-gradient-to-br from-[#4b6d8c] to-[#22303d]" />
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#6b8a6b] to-[#2d4a2d]">
+          <span className="text-[18px]">🔍</span>
+        </div>
         <div>
-          <p className="text-[16px] font-semibold text-white">Theliv</p>
-          <p className="text-[12.5px] text-white/55">Investment Platform</p>
+          <p className="text-[16px] font-semibold text-white">Discovery Brief</p>
+          <p className="text-[12.5px] text-white/55">Interview Notes</p>
+        </div>
+      </div>
+
+      <div className="mt-5 border-t border-white/10 pt-4 space-y-3">
+        {questions.map((item) => (
+          <div key={item.q} className="rounded-lg border border-white/10 bg-black/40 p-3">
+            <p className="text-[11px] font-semibold text-hr-green">{item.q}</p>
+            <p className="mt-1.5 text-[12px] leading-relaxed text-white/70">{item.a}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 border-t border-white/10 pt-4">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-hr-green" />
+          <span className="text-[11px] text-white/50">3 of 8 questions answered</span>
+        </div>
+        <div className="mt-2 h-[3px] w-full rounded-full bg-white/10">
+          <div className="h-full w-[37%] rounded-full bg-hr-green" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Design: architecture diagram with components and connections. */
+function DesignCard() {
+  const layers = [
+    { label: "Client", items: ["Next.js SSR", "React SPA"] },
+    { label: "API", items: ["GraphQL", "REST"] },
+    { label: "Data", items: ["PostgreSQL", "Redis"] },
+  ];
+
+  return (
+    <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
+      <div className="flex items-center gap-3.5">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#8b6b4a] to-[#3d2d1a]">
+          <span className="text-[18px]">🏗️</span>
+        </div>
+        <div>
+          <p className="text-[16px] font-semibold text-white">System Design</p>
+          <p className="text-[12.5px] text-white/55">Architecture Overview</p>
         </div>
       </div>
 
       <div className="mt-5 border-t border-white/10 pt-4">
-        <p className="text-[12.5px] font-semibold text-white">Milestones</p>
-        <div className="mt-3 grid grid-cols-2 gap-2.5">
-          {["Discovery & scope", "Portfolio dashboard"].map((milestone, index) => (
-            <div
-              key={milestone}
-              className="rounded-lg border border-white/10 bg-black/40 p-2.5"
-            >
-              <p className="text-[9.5px] leading-tight text-white/75">
-                {milestone}
-              </p>
-              <div className="mt-2 h-[3px] w-full rounded-full bg-white/60" />
-              <div className="mt-3 flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-white/25" />
-                <span
-                  className={`h-[3px] rounded-full bg-white/25 ${index ? "w-8" : "w-10"}`}
-                />
+        <div className="space-y-3">
+          {layers.map((layer, i) => (
+            <div key={layer.label}>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-semibold text-[#e0a33c]">{layer.label}</span>
+                {i < layers.length - 1 && (
+                  <span className="text-white/20" aria-hidden="true">↓</span>
+                )}
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-5 border-t border-white/10 pt-4">
-        <p className="text-[12.5px] font-semibold text-white">Stack</p>
-        <div className="mt-4 flex justify-around">
-          {[
-            { label: "Next.js", stars: 3 },
-            { label: "Node.js", stars: 3 },
-            { label: "MongoDB", stars: 2 },
-          ].map((badge) => (
-            <div
-              key={badge.label}
-              data-badge
-              className="flex flex-col items-center gap-1.5"
-            >
-              <div className="flex h-14 w-12 items-center justify-center bg-[#171c23] [clip-path:polygon(50%_0,100%_25%,100%_75%,50%_100%,0_75%,0_25%)]">
-                <span className="text-[7.5px] text-white/70">{badge.label}</span>
-              </div>
-              <div className="flex gap-0.5">
-                {[0, 1, 2].map((star) => (
-                  <span
-                    key={star}
-                    className={`text-[8px] ${star < badge.stars ? "text-[#f5c451]" : "text-white/20"}`}
+              <div className="flex gap-2">
+                {layer.items.map((item) => (
+                  <div
+                    key={item}
+                    className="flex-1 rounded-lg border border-white/10 bg-black/40 p-2.5 text-center"
                   >
-                    ★
-                  </span>
+                    <span className="text-[11px] text-white/75">{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      <div className="mt-4 border-t border-white/10 pt-4 flex justify-between">
+        <div className="text-center">
+          <p className="text-[18px] font-bold text-white">4</p>
+          <p className="text-[10px] text-white/40">Services</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[18px] font-bold text-white">12</p>
+          <p className="text-[10px] text-white/40">Endpoints</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[18px] font-bold text-white">2</p>
+          <p className="text-[10px] text-white/40">Databases</p>
+        </div>
+      </div>
     </div>
   );
 }
+
+/** Scope: milestones timeline with progress indicators. */
+function ScopeCard() {
+  const milestones = [
+    { title: "Discovery & Scope", status: "done", week: "Week 1" },
+    { title: "Core API & Auth", status: "done", week: "Week 2–3" },
+    { title: "Dashboard UI", status: "active", week: "Week 4–5" },
+    { title: "Testing & Launch", status: "upcoming", week: "Week 6" },
+  ];
+
+  return (
+    <div className="w-[300px] rounded-2xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl sm:w-[360px]">
+      <div className="flex items-center gap-3.5">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#6b6b8a] to-[#2d2d4a]">
+          <span className="text-[18px]">📋</span>
+        </div>
+        <div>
+          <p className="text-[16px] font-semibold text-white">Project Scope</p>
+          <p className="text-[12.5px] text-white/55">Milestones & Timeline</p>
+        </div>
+      </div>
+
+      <div className="mt-5 border-t border-white/10 pt-4">
+        <div className="space-y-0">
+          {milestones.map((m, i) => (
+            <div key={m.title} className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <span
+                  className={`h-3 w-3 rounded-full ${
+                    m.status === "done"
+                      ? "bg-hr-green"
+                      : m.status === "active"
+                        ? "bg-[#e0a33c]"
+                        : "bg-white/20"
+                  }`}
+                />
+                {i < milestones.length - 1 && (
+                  <div className="w-px flex-1 bg-white/15" />
+                )}
+              </div>
+              <div className="pb-4">
+                <p className="text-[13px] font-medium text-white">{m.title}</p>
+                <p className="mt-0.5 text-[10.5px] text-white/40">{m.week}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-t border-white/10 pt-4 flex items-center justify-between">
+        <div>
+          <p className="text-[12.5px] text-white/50">Total estimated</p>
+          <p className="text-[15px] font-semibold text-white">6 weeks</p>
+        </div>
+        <div className="rounded-lg bg-white/10 px-3 py-2">
+          <p className="text-[11px] text-white/50">Budget</p>
+          <p className="text-[13px] font-semibold text-hr-green">$48k</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Delivery board — stages 3-4                                        */
+/* ------------------------------------------------------------------ */
 
 /** Kanban task card reused by the delivery board. */
 function TaskCard({ title, owner, dates, dim = false }) {
@@ -114,7 +232,7 @@ function TaskCard({ title, owner, dates, dim = false }) {
   );
 }
 
-/** Backlog → Shipped board — shown in the final stage. */
+/** Backlog → Shipped board — shown in the final stages. */
 function DelegationBoard() {
   return (
     <div className="relative w-[300px] sm:w-[420px]">
@@ -124,9 +242,7 @@ function DelegationBoard() {
       >
         <div className="mb-3 flex items-center justify-between px-1">
           <p className="text-[12.5px] text-white/80">Backlog</p>
-          <span className="text-white/45" aria-hidden="true">
-            ···
-          </span>
+          <span className="text-white/45" aria-hidden="true">···</span>
         </div>
         <TaskCard
           title="Payment gateway and checkout flow"
@@ -142,9 +258,7 @@ function DelegationBoard() {
       >
         <div className="mb-3 flex items-center justify-between px-1">
           <p className="text-[12.5px] text-white/80">Shipped</p>
-          <span className="text-white/45" aria-hidden="true">
-            ···
-          </span>
+          <span className="text-white/45" aria-hidden="true">···</span>
         </div>
         <div className="space-y-2.5">
           <TaskCard
@@ -196,6 +310,10 @@ function PhotoPlate({ className = "" }) {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Main component                                                     */
+/* ------------------------------------------------------------------ */
+
 export default function ChangingDev() {
   const root = useRef(null);
 
@@ -212,7 +330,9 @@ export default function ChangingDev() {
         gsap.set(statements, { opacity: 1 });
         gsap.set(bodies, { opacity: 1, y: 0 });
         gsap.set(self.selector("[data-heading]"), { opacity: 0 });
-        gsap.set(self.selector("[data-visual='profile']"), { display: "none" });
+        gsap.set(self.selector("[data-visual='discovery']"), { display: "none" });
+        gsap.set(self.selector("[data-visual='design']"), { display: "none" });
+        gsap.set(self.selector("[data-visual='scope']"), { display: "none" });
         gsap.set(self.selector("[data-visual='board']"), { opacity: 1, display: "flex" });
         return;
       }
@@ -220,6 +340,8 @@ export default function ChangingDev() {
       // Statements start dim; each one lights up as its stage arrives.
       gsap.set(statements, { opacity: 0.22 });
       gsap.set(bodies, { opacity: 0, y: 8 });
+      gsap.set(self.selector("[data-visual='design']"), { opacity: 0 });
+      gsap.set(self.selector("[data-visual='scope']"), { opacity: 0 });
       gsap.set(self.selector("[data-visual='board']"), { opacity: 0 });
 
       const timeline = gsap.timeline({
@@ -232,87 +354,97 @@ export default function ChangingDev() {
         defaults: { ease: "none" },
       });
 
-      // --- Stage 1 -------------------------------------------------------
+      // --- Stage 0: Discovery -------------------------------------------------
       timeline
         .to(statements[0], { opacity: 1, duration: 0.4 }, 0)
         .to(bodies[0], { opacity: 1, y: 0, duration: 0.4 }, 0)
         .from(
-          self.selector("[data-visual='profile']"),
+          self.selector("[data-visual='discovery']"),
           { opacity: 0, y: 40, duration: 0.6 },
           0
         )
         .from(
-          self.selector("[data-badge]"),
+          self.selector("[data-visual='discovery'] [data-badge]"),
           { opacity: 0, scale: 0.6, stagger: 0.08, duration: 0.4 },
           0.2
         );
 
-      // --- Stage 1 → 2 ---------------------------------------------------
+      // --- Stage 0 → 1: Design — cross-fade visuals --------------------------
       timeline
-        .to(statements[0], { opacity: 0.22, duration: 0.4 }, 1.1)
-        .to(bodies[0], { opacity: 0, y: -8, duration: 0.35 }, 1.1)
-        .to(statements[1], { opacity: 1, duration: 0.4 }, 1.2)
-        .to(bodies[1], { opacity: 1, y: 0, duration: 0.4 }, 1.25)
-        .to(
-          self.selector("[data-visual='profile']"),
-          { y: -30, duration: 0.9 },
-          1.1
-        );
+        .to(statements[0], { opacity: 0.22, duration: 0.35 }, 0.8)
+        .to(bodies[0], { opacity: 0, y: -8, duration: 0.3 }, 0.8)
+        .to(self.selector("[data-visual='discovery']"), { opacity: 0, duration: 0.4 }, 0.8)
+        .set(self.selector("[data-visual='discovery']"), { display: "none" }, 1.2)
+        .set(self.selector("[data-visual='design']"), { display: "block" }, 1.2)
+        .to(self.selector("[data-visual='design']"), { opacity: 1, duration: 0.4 }, 1.2)
+        .to(statements[1], { opacity: 1, duration: 0.35 }, 0.9)
+        .to(bodies[1], { opacity: 1, y: 0, duration: 0.35 }, 0.95);
 
-      // --- Stage 2 → 3: the panel inverts to black -----------------------
+      // --- Stage 1 → 2: Scope — cross-fade visuals ---------------------------
       timeline
-        .to(statements[1], { opacity: 0.22, duration: 0.4 }, 2.2)
-        .to(bodies[1], { opacity: 0, y: -8, duration: 0.35 }, 2.2)
-        .to(self.selector("[data-heading]"), { opacity: 0, duration: 0.5 }, 2.1)
-        .to(panel, { backgroundColor: "#000000", duration: 0.7 }, 2.1)
-        .to(statements, { color: "#ffffff", duration: 0.7 }, 2.1)
-        .to(bodies, { color: "rgba(255,255,255,0.55)", duration: 0.7 }, 2.1)
+        .to(statements[1], { opacity: 0.22, duration: 0.35 }, 1.6)
+        .to(bodies[1], { opacity: 0, y: -8, duration: 0.3 }, 1.6)
+        .to(self.selector("[data-visual='design']"), { opacity: 0, duration: 0.4 }, 1.6)
+        .set(self.selector("[data-visual='design']"), { display: "none" }, 2.0)
+        .set(self.selector("[data-visual='scope']"), { display: "block" }, 2.0)
+        .to(self.selector("[data-visual='scope']"), { opacity: 1, duration: 0.4 }, 2.0)
+        .to(statements[2], { opacity: 1, duration: 0.35 }, 1.7)
+        .to(bodies[2], { opacity: 1, y: 0, duration: 0.35 }, 1.75);
+
+      // --- Stage 2 → 3: Shipping — panel inverts to black ---------------------
+      timeline
+        .to(statements[2], { opacity: 0.22, duration: 0.35 }, 2.4)
+        .to(bodies[2], { opacity: 0, y: -8, duration: 0.3 }, 2.4)
+        .to(self.selector("[data-heading]"), { opacity: 0, duration: 0.5 }, 2.3)
+        .to(panel, { backgroundColor: "#000000", duration: 0.7 }, 2.3)
+        .to(statements, { color: "#ffffff", duration: 0.7 }, 2.3)
+        .to(bodies, { color: "rgba(255,255,255,0.55)", duration: 0.7 }, 2.3)
         .to(
-          self.selector("[data-visual='profile']"),
+          self.selector("[data-visual='scope']"),
           { opacity: 0, y: -60, duration: 0.5 },
-          2.1
+          2.3
         )
-        .set(self.selector("[data-visual='profile']"), { display: "none" }, 2.6)
-        .set(self.selector("[data-visual='board']"), { display: "flex" }, 2.6)
+        .set(self.selector("[data-visual='scope']"), { display: "none" }, 2.8)
+        .set(self.selector("[data-visual='board']"), { display: "flex" }, 2.8)
         .to(
           self.selector("[data-visual='board']"),
           { opacity: 1, duration: 0.4 },
-          2.6
+          2.8
         )
         .from(
           self.selector("[data-board='backlog']"),
           { opacity: 0, x: -40, duration: 0.5 },
-          2.65
+          2.85
         )
         .from(
           self.selector("[data-board='delegated']"),
           { opacity: 0, x: 40, y: 20, duration: 0.5 },
-          2.75
+          2.95
         )
         .from(
           self.selector("[data-board='arrow']"),
           { opacity: 0, scale: 0.8, duration: 0.4 },
-          2.9
+          3.1
         )
-        .to(statements[2], { opacity: 1, duration: 0.4 }, 2.5)
-        .to(bodies[2], { opacity: 1, y: 0, duration: 0.4 }, 2.55);
+        .to(statements[3], { opacity: 1, duration: 0.35 }, 2.7)
+        .to(bodies[3], { opacity: 1, y: 0, duration: 0.35 }, 2.75);
+
+      // --- Stage 3 → 4: Handoff -----------------------------------------------
+      timeline
+        .to(statements[3], { opacity: 0.22, duration: 0.35 }, 3.6)
+        .to(bodies[3], { opacity: 0, y: -8, duration: 0.3 }, 3.6)
+        .to(statements[4], { opacity: 1, duration: 0.35 }, 3.7)
+        .to(bodies[4], { opacity: 1, y: 0, duration: 0.35 }, 3.75);
     }, root);
 
     return () => context.revert();
   }, []);
 
   return (
-    <section id="changing" ref={root} className="relative h-[340vh] scroll-mt-16">
+    <section id="changing" ref={root} className="relative h-[440vh] scroll-mt-16">
       <div
         data-panel
-        /*
-         * Sticks to the frame's top edge (--frame-gap), not the logo tab's
-         * depth. The tab and the nav notch each cut 78px deep, but only at
-         * the far left and far right — across the middle run the panel's top
-         * edge is at --frame-gap. Sticking at --frame-top left a white band
-         * in that middle region, painting outside the frame's punch-out.
-         */
-        className="sticky top-[var(--frame-gap)] flex h-[calc(100dvh-var(--frame-gap)*2)] flex-col overflow-hidden rounded-[var(--frame-radius)] bg-white px-5 pb-12 pt-[calc(var(--frame-top)-var(--frame-gap)+2rem)] sm:px-8"
+        className="sticky top-[var(--frame-gap)] flex h-[calc(100dvh-var(--frame-gap)*2)] flex-col overflow-hidden bg-white px-5 pb-12 pt-[calc(var(--frame-top)-var(--frame-gap)+2rem)] sm:px-8"
       >
         <h2
           data-heading
@@ -345,15 +477,33 @@ export default function ChangingDev() {
             ))}
           </div>
 
-          {/* Visual column — swaps as the statements advance. */}
+          {/* Visual column — one card per early stage, then the board for shipping/handoff. */}
           <div className="relative hidden min-h-[400px] items-center justify-center lg:flex">
-            <div data-visual="profile" className="absolute">
+            {/* Stage 0: Discovery */}
+            <div data-visual="discovery" className="absolute">
               <PhotoPlate className="h-[300px] w-[260px]" />
               <div className="absolute -bottom-16 -right-24">
-                <ProfileCard />
+                <DiscoveryCard />
               </div>
             </div>
 
+            {/* Stage 1: Design */}
+            <div data-visual="design" className="absolute hidden">
+              <PhotoPlate className="h-[300px] w-[260px]" />
+              <div className="absolute -bottom-16 -right-24">
+                <DesignCard />
+              </div>
+            </div>
+
+            {/* Stage 2: Scope */}
+            <div data-visual="scope" className="absolute hidden">
+              <PhotoPlate className="h-[300px] w-[260px]" />
+              <div className="absolute -bottom-16 -right-24">
+                <ScopeCard />
+              </div>
+            </div>
+
+            {/* Stages 3-4: Delivery board */}
             <div data-visual="board" className="absolute hidden items-center gap-6">
               <DelegationBoard />
               <PhotoPlate className="hidden h-[320px] w-[240px] xl:block" />

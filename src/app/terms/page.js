@@ -1,4 +1,5 @@
 import PageHeader from "@/components/landing/PageHeader";
+import CTA from "@/components/landing/CTA";
 import { contact, site } from "@/data/site";
 
 export const metadata = {
@@ -63,6 +64,8 @@ export default function TermsPage() {
           </div>
         </div>
       </section>
+
+      <CTA />
     </>
   );
 }
